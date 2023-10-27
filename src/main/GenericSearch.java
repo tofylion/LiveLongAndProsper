@@ -1,0 +1,87 @@
+package main;
+
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
+
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+import interfaces.SearchInterface;
+import interfaces.SearchStrategy;
+import models.Node;
+
+abstract public class GenericSearch implements SearchInterface {
+    
+    @Override
+    public String solve(String initialState, SearchStrategy strategy, boolean vizualize) {
+        // Record before values
+        long[] stats = getStats();
+        int nodesExpanded = 0;
+
+        Queue<Node> nodes = new LinkedList<Node>();
+        Node root = makeNodeFromProblem(initialState);
+        nodes.add(root);
+        
+        while (true) {
+            if (nodes.isEmpty())
+                return "NOSOLUTION";
+            Node node = nodes.remove();
+            if (goalTest(node)) {
+                // Record after values
+                long[] newStats = getStats();
+
+                // Calculate differences
+                long runningTime = newStats[0] - stats[0];
+                long cpuUsage = newStats[1] - stats[1];
+                long ramUsage = newStats[2] - stats[2];
+
+                // Print results
+                System.out.println("Running time: " + runningTime + " ns");
+                System.out.println("CPU usage: " + cpuUsage + " ns");
+                System.out.println("RAM usage: " + ramUsage + " bytes");
+                System.out.println("Nodes expanded: " + nodesExpanded);
+
+                return node.getPath();
+            }
+            nodes = strategy.queueingFunction(nodes, expand(node));
+            nodesExpanded++;
+        }
+    }
+
+    
+    /**
+     * Returns an array of long values representing the start time, CPU time, and memory usage of the current thread.
+     *
+     * @return an array of long values representing the start time, CPU time, and memory usage of the current thread.
+     */
+    private long[] getStats()
+    {
+        long startTime = System.nanoTime();
+        ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+        long startCpu = bean.getCurrentThreadCpuTime();
+        long startRam = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        return new long[]{startTime, startCpu, startRam};
+    }
+
+    @Override
+    public Node makeNodeFromProblem(String problem) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean goalTest(Node node) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Node[] expand(Node node) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void vizualize(Node node) {
+        //TODO: implement vizualize
+        throw new UnsupportedOperationException();
+    }
+
+}
