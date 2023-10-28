@@ -19,7 +19,7 @@ public class Node {
         
         List<String> plan = getPlan();
         double monetaryCost = getMoneySpent();
-        int nodesExpanded = getNodesExpaned();
+        int nodesExpanded = getNodesExpaned(this);
         return String.join(plan + "," + monetaryCost + "," + nodesExpanded)
         
     }
@@ -51,12 +51,14 @@ public class Node {
         return moneySpent;
     }
 
-    public int getNodesExpaned()
+    public int getNodesExpaned(Node currentNode)
     {
         int nodes = 0;
-        Node currentNode = this;
         while(currentNode.parent != null)
+        {
+        currentNode = currentNode.parent;
         nodes++;
+        }
 
         return nodes;
     }
