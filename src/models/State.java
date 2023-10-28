@@ -40,4 +40,9 @@ public class State {
     public String getPreviousAction() {
         return previousAction;
     }
+
+    public State getState(){
+        return this.state;
+    }
+
 }

@@ -54,7 +54,8 @@ public class Node {
     public int getNodesExpaned()
     {
         int nodes = 0;
-        while(parent != null)
+        Node currentNode = this;
+        while(currentNode.parent != null)
         nodes++;
 
         return nodes;
