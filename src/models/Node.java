@@ -1,13 +1,66 @@
 package models;
+import models.State;
 
 public class Node {
-    public Node() {
-        //TODO: constructor body
+    private double monetaryCost;
+    private int nodesExpanded;
+    private Node parent;
+    private State state;
+
+    public Node(double monetaryCost, int nodesExpanded, Node parent, State state) {
+       
+        this.monetaryCost = monetaryCost;
+        this.nodesExpanded = nodesExpanded;
+        this.parent = parent;
+        this.state = state;
     }
 
     public String getPath() {
-        //TODO: implement getPath
-        // Return is of the following format: plan;monetaryCost;nodesExpanded
-        throw new UnsupportedOperationException();
+        
+        List<String> plan = getPlan();
+        double monetaryCost = getMoneySpent();
+        int nodesExpanded = getNodesExpaned();
+        return String.join(plan + "," + monetaryCost + "," + nodesExpanded)
+        
     }
-}
+
+    public List<String> getPlan() {
+        List<String> accumulatedPlan = new LinkedList<>();
+    
+        Node currentNode = this;
+    
+        while (currentNode != null) {
+            String previousAction = currentNode.getState().getPreviousAction();
+            
+            if (previousAction != null) {
+                accumulatedPlan.add(0, previousAction);
+            }
+    
+            currentNode = currentNode.getParent();
+        }
+    
+        return accumulatedPlan;
+    }
+
+    public double getMoneySpent()
+    {
+        double moneySpent = 0.0;
+        Node currentNode = this;
+        moneySpend = currentNode.getState().getMoneySpent();
+        
+        return moneySpent;
+    }
+
+    public int getNodesExpaned()
+    {
+        int nodes = 0;
+        while(parent != null)
+        nodes++;
+
+        return nodes;
+    }
+    
+        
+        
+    }
+
