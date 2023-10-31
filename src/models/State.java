@@ -42,7 +42,7 @@ public class State {
     }
 
     public State getState(){
-        return this.state;
+        return this;
     }
 
 }
