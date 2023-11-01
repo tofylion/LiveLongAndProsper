@@ -5,12 +5,6 @@ import java.util.Spliterator;
 
 import models.State;
 
-public class Node implements Comparable<Node>{
-
-    //the cost to reach this node from its parent
-    private double monetaryCost;
-
-    
 public class Node implements Comparable<Node> {
     private double monetaryCost;
     private Node parent;
