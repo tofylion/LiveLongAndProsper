@@ -73,8 +73,8 @@ public class State {
     }
 
     public State useResources(int cost, int food, int materials, int energy, int foodPrice, int materialsPrice,
-            int energyPrice) {
-        return new State(prosperityLevel, this.food - food, this.materials - materials, this.energy - energy,
+            int energyPrice, int prosperityIncrease) {
+        return new State(prosperityLevel + prosperityIncrease, this.food - food, this.materials - materials, this.energy - energy,
                 moneySpent + cost + (food*foodPrice) + (materials*materialsPrice) + (energy*energyPrice), deliveryPending - 1, deliveryType);
     }
 

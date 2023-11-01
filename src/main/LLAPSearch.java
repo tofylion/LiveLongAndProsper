@@ -67,11 +67,11 @@ public class LLAPSearch extends GenericSearch {
                     Actions.WAIT);
             Node buildOneNode = node.nextNode(
                     currentState.useResources(buildOneInfo[0], buildOneInfo[1], buildOneInfo[2], buildOneInfo[3],
-                            unitPrices[0], unitPrices[1], unitPrices[2]),
+                            unitPrices[0], unitPrices[1], unitPrices[2], buildOneInfo[4]),
                     Actions.BUILDONE);
             Node buildTwoNode = node.nextNode(
                     currentState.useResources(buildTwoInfo[0], buildTwoInfo[1], buildTwoInfo[2], buildTwoInfo[3],
-                            unitPrices[0], unitPrices[1], unitPrices[2]),
+                            unitPrices[0], unitPrices[1], unitPrices[2], buildTwoInfo[4]),
                     Actions.BUILDTWO);
             expanded[0] = waitNode;
             expanded[1] = buildOneNode;
@@ -108,11 +108,11 @@ public class LLAPSearch extends GenericSearch {
                     Actions.RequestMaterials, unitPrices[0], unitPrices[1], unitPrices[2]), Actions.RequestMaterials);
             Node buildOneNode = node.nextNode(
                     newState.useResources(buildOneInfo[0], buildOneInfo[1], buildOneInfo[2], buildOneInfo[3],
-                            unitPrices[0], unitPrices[1], unitPrices[2]),
+                            unitPrices[0], unitPrices[1], unitPrices[2], buildOneInfo[4]),
                     Actions.BUILDONE);
             Node buildTwoNode = node.nextNode(
                     newState.useResources(buildTwoInfo[0], buildTwoInfo[1], buildTwoInfo[2], buildTwoInfo[3],
-                            unitPrices[0], unitPrices[1], unitPrices[2]),
+                            unitPrices[0], unitPrices[1], unitPrices[2], buildTwoInfo[4]),
                     Actions.BUILDTWO);
             expandedNodes[0] = requestFoodNode;
             expandedNodes[1] = requestEnergyNode;
