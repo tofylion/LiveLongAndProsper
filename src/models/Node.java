@@ -1,4 +1,8 @@
 package models;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Spliterator;
+
 import models.State;
 
 public class Node {
@@ -10,7 +14,6 @@ public class Node {
     public Node(double monetaryCost, int nodesExpanded, Node parent, State state, String previousAction) {
        
         this.monetaryCost = monetaryCost;
-        this.nodesExpanded = nodesExpanded;
         this.parent = parent;
         this.state = state;
         this.previousAction = previousAction;
@@ -18,10 +21,13 @@ public class Node {
 
     public String getPath() {
         
-        List<String> plan = getPlan();
-        monetaryCost = getState.getMoneySpent();
-        int nodesExpanded = getNodesExpaned(this);
-        return String.join(plan.join(",") + ";" + monetaryCost);
+        List<String> planList = getPlan();
+        String plan = "";
+        monetaryCost = state.getMoneySpent();
+        for (int i = 0; i < planList.size(); i++) { 
+            plan += " " + planList.get(i) + ",";
+        } 
+        return String.join(plan + ";" + monetaryCost);
         
     }
 
@@ -31,13 +37,13 @@ public class Node {
         Node currentNode = this;
     
         while (currentNode != null) {
-            String previousAction = currentNode.getState().getPreviousAction();
+            String previousAction = currentNode.previousAction;
             
             if (previousAction != null) {
                 accumulatedPlan.add(0, previousAction);
             }
     
-            currentNode = currentNode.getParent();
+            currentNode = currentNode.parent;
         }
     
         return accumulatedPlan;
@@ -47,13 +53,11 @@ public class Node {
     {
         double moneySpent = 0.0;
         Node currentNode = this;
-        moneySpent = currentNode.getState().getMoneySpent();
+        moneySpent = currentNode.state.getMoneySpent();
         
         return moneySpent;
     }
-
-    
-        
+   
         
     }
 

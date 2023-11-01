@@ -1,4 +1,4 @@
-package.models;
+package models;
 
 public class State {
     private int prosperityLevel;
