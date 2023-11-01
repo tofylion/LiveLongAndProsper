@@ -41,7 +41,7 @@ public class UniformCost implements SearchStrategy {
         Queue<Node> finalQueue = ucs.queueingFunction(castedQueue, nodes);
         
         for (int i = 0; i < 5; i++){
-            System.out.println(finalQueue.remove().cost);
+            System.out.println(finalQueue.remove().getMoneySpent());
         }
     }
 

@@ -1,5 +1,6 @@
 package main;
 import interfaces.SearchStrategy;
+import strategies.IterativeDeepeningSearch;
 
 public class LLAPSearch extends GenericSearch {
 
@@ -14,6 +15,10 @@ public class LLAPSearch extends GenericSearch {
 
     public String solve(String initialState, SearchStrategy strategy, boolean vizualize) throws Exception {
         ParseInitialState(initialState);
+        if(strategy instanceof IterativeDeepeningSearch){
+            IterativeDeepeningSearch newStrategy = (IterativeDeepeningSearch) strategy;
+            return super.solveIterative(initialState,  strategy, vizualize, newStrategy.getMaxDepth());
+        }
         return super.solve(initialState, strategy, vizualize);
     }
 
