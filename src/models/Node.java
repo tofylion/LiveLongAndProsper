@@ -1,6 +1,9 @@
 package models;
 
 public class Node {
+
+    public int depth;
+
     public Node() {
         //TODO: constructor body
     }
