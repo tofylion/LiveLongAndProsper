@@ -22,27 +22,4 @@ public class UniformCost implements SearchStrategy {
         Queue<Node> returnQueue = queue;
         return returnQueue;
     }
-
-    //main method for testing purposes
-    public static void main(String[] args){
-        Node n1 = new Node(1);
-        Node n2 = new Node(2);
-        Node n3 = new Node(3);
-        Node n4 = new Node(4);
-        Node n5 = new Node(5);
-
-        PriorityQueue<Node> queue = new PriorityQueue<Node>();
-        queue.add(n4);
-        queue.add(n1);
-        queue.add(n2);
-        Node[] nodes = {n5, n3};
-        UniformCost ucs = new UniformCost();
-        Queue<Node> castedQueue = queue;
-        Queue<Node> finalQueue = ucs.queueingFunction(castedQueue, nodes);
-        
-        for (int i = 0; i < 5; i++){
-            System.out.println(finalQueue.remove().getMoneySpent());
-        }
-    }
-
 }
