@@ -8,9 +8,9 @@ import models.State;
 public class Node {
     private double monetaryCost;
     private Node parent;
-    private State state;
-    private String previousAction;
-    private int depth;
+    public State state;
+    public String previousAction;
+    public int depth;
 
     public Node(double monetaryCost, int nodesExpanded, Node parent, State state, String previousAction, int depth) {
        
