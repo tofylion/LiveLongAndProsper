@@ -14,7 +14,7 @@ import models.Node;
 abstract public class GenericSearch implements SearchInterface {
     
     @Override
-    public String solve(String initialState, SearchStrategy strategy, boolean vizualize) {
+    public String solve(String initialState, SearchStrategy strategy, boolean vizualize) throws Exception{
         // Record before values
         long[] stats = getStats();
         int nodesExpanded = 0;
