@@ -3,24 +3,25 @@ import models.State;
 
 public class Node {
     private double monetaryCost;
-    private int nodesExpanded;
     private Node parent;
     private State state;
+    private String previousAction;
 
-    public Node(double monetaryCost, int nodesExpanded, Node parent, State state) {
+    public Node(double monetaryCost, int nodesExpanded, Node parent, State state, String previousAction) {
        
         this.monetaryCost = monetaryCost;
         this.nodesExpanded = nodesExpanded;
         this.parent = parent;
         this.state = state;
+        this.previousAction = previousAction;
     }
 
     public String getPath() {
         
         List<String> plan = getPlan();
-        double monetaryCost = getMoneySpent();
+        monetaryCost = getState.getMoneySpent();
         int nodesExpanded = getNodesExpaned(this);
-        return String.join(plan + "," + monetaryCost + "," + nodesExpanded)
+        return String.join(plan.join(",") + ";" + monetaryCost);
         
     }
 
@@ -46,22 +47,11 @@ public class Node {
     {
         double moneySpent = 0.0;
         Node currentNode = this;
-        moneySpend = currentNode.getState().getMoneySpent();
+        moneySpent = currentNode.getState().getMoneySpent();
         
         return moneySpent;
     }
 
-    public int getNodesExpaned(Node currentNode)
-    {
-        int nodes = 0;
-        while(currentNode.parent != null)
-        {
-        currentNode = currentNode.parent;
-        nodes++;
-        }
-
-        return nodes;
-    }
     
         
         
