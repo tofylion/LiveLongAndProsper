@@ -1,5 +1,6 @@
 package main;
 
+import constants.Constants;
 import enums.Actions;
 import interfaces.SearchStrategy;
 import models.Node;
@@ -130,7 +131,7 @@ public class LLAPSearch extends GenericSearch {
 
     @Override
     public boolean goalTest(Node node) {
-        return node.state.getProsperityLevel() >= 100;
+        return node.state.getProsperityLevel() >= Constants.prosperityGoal;
     }
 
     public static void main(String[] args) throws Exception {
