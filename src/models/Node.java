@@ -10,13 +10,15 @@ public class Node {
     private Node parent;
     private State state;
     private String previousAction;
+    private int depth;
 
-    public Node(double monetaryCost, int nodesExpanded, Node parent, State state, String previousAction) {
+    public Node(double monetaryCost, int nodesExpanded, Node parent, State state, String previousAction, int depth) {
        
         this.monetaryCost = monetaryCost;
         this.parent = parent;
         this.state = state;
         this.previousAction = previousAction;
+        this.depth = depth;
     }
 
     public String getPath() {
