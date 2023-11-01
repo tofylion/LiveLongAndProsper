@@ -22,7 +22,7 @@ abstract public class GenericSearch implements SearchInterface {
         Queue<Node> nodes = new LinkedList<Node>();
         Node root = makeNodeFromProblem(initialState);
         nodes.add(root);
-        
+
         while (true) {
             if (nodes.isEmpty())
                 return "NOSOLUTION";
@@ -47,6 +47,48 @@ abstract public class GenericSearch implements SearchInterface {
             nodes = strategy.queueingFunction(nodes, expand(node));
             nodesExpanded++;
         }
+    }
+    
+    public String solveIterative(String initialState, SearchStrategy strategy, boolean vizualize, int maxDepth) {
+        // Record before values
+        long[] stats = getStats();
+        int nodesExpanded = 0;
+
+        Queue<Node> nodes = new LinkedList<Node>();
+        Node root = makeNodeFromProblem(initialState);
+        nodes.add(root);
+
+        // Perform depth-limited search with increasing depth limits
+        for (int depth = 0; depth <= maxDepth; depth++) {
+
+            while (true) {
+            if (nodes.isEmpty())
+                return "NOSOLUTION";
+            Node node = nodes.remove();
+            if (goalTest(node)) {
+                // Record after values
+                long[] newStats = getStats();
+
+                // Calculate differences
+                long runningTime = newStats[0] - stats[0];
+                long cpuUsage = newStats[1] - stats[1];
+                long ramUsage = newStats[2] - stats[2];
+
+                // Print results
+                System.out.println("Running time: " + runningTime + " ns");
+                System.out.println("CPU usage: " + cpuUsage + " ns");
+                System.out.println("RAM usage: " + ramUsage + " bytes");
+                System.out.println("Nodes expanded: " + nodesExpanded);
+
+                return node.getPath();
+            }
+            Node[] expanded = node.depth < depth ? expand(node) : new Node[0];
+            nodes = strategy.queueingFunction(nodes, expanded);
+            nodesExpanded++;
+        }
+        }
+
+        return "NOSOLUTION";
     }
 
     
