@@ -1,19 +1,12 @@
-package strategies;
+package code.strategies;
 
 import java.util.Queue;
 import java.util.Stack;
 import java.util.LinkedList;
-import models.Node;
-import interfaces.SearchStrategy;
+import code.models.Node;
+import code.interfaces.SearchStrategy;
 
-public class IterativeDeepeningSearch implements SearchStrategy {
-
-    private int maxDepth;
-
-    public IterativeDeepeningSearch(int maxDepth){
-        this.maxDepth = maxDepth;
-    }
-
+public class DepthFirstSearch implements SearchStrategy {
     @Override
     public Queue<Node> queueingFunction(Queue<Node> nodes, Node[] newNodes) {
         Stack<Node> stack = new Stack<>();
@@ -32,8 +25,5 @@ public class IterativeDeepeningSearch implements SearchStrategy {
         }
         
         return queue;
-    }
-    public int getMaxDepth(){
-        return maxDepth;
     }
 }

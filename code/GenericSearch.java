@@ -1,4 +1,4 @@
-package main;
+package code;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
@@ -7,9 +7,9 @@ import java.lang.management.ThreadMXBean;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import interfaces.SearchInterface;
-import interfaces.SearchStrategy;
-import models.Node;
+import code.interfaces.SearchInterface;
+import code.interfaces.SearchStrategy;
+import code.models.Node;
 
 abstract public class GenericSearch implements SearchInterface {
     
@@ -125,6 +125,10 @@ abstract public class GenericSearch implements SearchInterface {
     public void vizualize(Node node) {
         //TODO: implement vizualize
         throw new UnsupportedOperationException();
+    }
+
+    public static void main(String[] args) {
+        System.err.println("Hello World!");
     }
 
 }

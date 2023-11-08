@@ -1,13 +1,13 @@
-package main;
+package code;
 import java.util.Set;
 
 
-import constants.Constants;
-import enums.Actions;
-import interfaces.SearchStrategy;
-import models.Node;
-import models.State;
-import strategies.IterativeDeepeningSearch;
+import code.constants.Constants;
+import code.enums.Actions;
+import code.interfaces.SearchStrategy;
+import code.models.Node;
+import code.models.State;
+import code.strategies.IterativeDeepeningSearch;
 
 public class LLAPSearch extends GenericSearch {
 
@@ -137,20 +137,20 @@ public class LLAPSearch extends GenericSearch {
         return node.state.getProsperityLevel() >= Constants.prosperityGoal;
     }
 
-    public static void main(String[] args) throws Exception {
-        String intialState = "50;" + // initialProsperity
-                "22,22,22;" + // initalResources
-                "50,60,70;" + // unitPrices
-                "30,2;19,1;15,1;" + // foodRequest;materialRequest;energyRequest
-                "300,5,7,3,20;" + // buildOneInfo
-                "500,8,6,3,40;"; // buildTwoInfo
+//     public static void main(String[] args) throws Exception {
+//         String intialState = "50;" + // initialProsperity
+//                 "22,22,22;" + // initalResources
+//                 "50,60,70;" + // unitPrices
+//                 "30,2;19,1;15,1;" + // foodRequest;materialRequest;energyRequest
+//                 "300,5,7,3,20;" + // buildOneInfo
+//                 "500,8,6,3,40;"; // buildTwoInfo
 
-        LLAPSearch demo = new LLAPSearch();
-        demo.makeNodeFromProblem(intialState);
-        // for(int i= 0; i< demo.initialResources.length; i++){
-        // System.out.println(demo.buildTwoInfo[i]);
-        // }
-        System.out.println(demo.initialProsperity);
+//         LLAPSearch demo = new LLAPSearch();
+//         demo.makeNodeFromProblem(intialState);
+//         // for(int i= 0; i< demo.initialResources.length; i++){
+//         // System.out.println(demo.buildTwoInfo[i]);
+//         // }
+//         System.out.println(demo.initialProsperity);
 
-    }
+//     }
 }

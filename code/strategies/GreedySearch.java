@@ -1,11 +1,11 @@
-package strategies;
+package code.strategies;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import interfaces.SearchStrategy;
-import models.Node;
-import models.HeuristicBluePrint;
+import code.interfaces.SearchStrategy;
+import code.models.Node;
+import code.models.HeuristicBluePrint;
 
 public class GreedySearch implements SearchStrategy{
 

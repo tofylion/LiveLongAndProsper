@@ -1,6 +1,6 @@
-package interfaces;
+package code.interfaces;
 
-import models.Node;
+import code.models.Node;
 
 public interface SearchInterface {
     String solve(String initialState, SearchStrategy strategy, boolean vizualize) throws Exception;

@@ -1,7 +1,7 @@
 package models;
 
-import constants.Constants;
-import enums.Actions;
+import code.constants.Constants;
+import code.enums.Actions;
 
 public class State {
     private int prosperityLevel;

@@ -1,9 +1,9 @@
-package strategies;
+package code.strategies;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
-import interfaces.SearchStrategy;
-import models.Node;
+import code.interfaces.SearchStrategy;
+import code.models.Node;
 
 public class UniformCost implements SearchStrategy {
 

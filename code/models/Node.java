@@ -1,11 +1,11 @@
-package models;
+package code.models;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Spliterator;
 
-import enums.Actions;
-import models.State;
+import code.enums.Actions;
+import code.models.State;
 
 public class Node implements Comparable<Node> {
     private Node parent;

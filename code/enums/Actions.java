@@ -1,4 +1,4 @@
-package enums;
+package code.enums;
 
 public enum Actions {
     RequestFood,

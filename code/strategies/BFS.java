@@ -1,8 +1,8 @@
-package strategies;
+package code.strategies;
 
 import java.util.Queue;
-import models.Node;
-import interfaces.SearchStrategy;
+import code.models.Node;
+import code.interfaces.SearchStrategy;
 
 public class BFS implements SearchStrategy {
     @Override
