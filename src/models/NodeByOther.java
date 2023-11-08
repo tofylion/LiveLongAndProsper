@@ -5,7 +5,7 @@ import java.util.Comparator;
 import models.Node;
 
 
-public class NodeByBuild implements Comparator<Node> {
+public class NodeByOther implements Comparator<Node> {
 
     public LLAPSearch lap;
     public Constants Constants;
@@ -18,10 +18,10 @@ public class NodeByBuild implements Comparator<Node> {
     int costNodeOneToGoal;
     int costNodeTwoToGoal;
 
-    //checks if this instance is being used as a tiebreaker
+    //check if this instance is being used as a tiebreaker only
     boolean isTieBreaking;
-
-    public NodeByBuild(boolean isTieBreaking){
+    
+    public NodeByOther(boolean isTieBreaking){
         this.isTieBreaking = isTieBreaking;
     }
 
@@ -67,9 +67,10 @@ public class NodeByBuild implements Comparator<Node> {
             return 1;
         } else{
             if (isTieBreaking) {
+                
                 return 0;
             } else {
-                Comparator<Node> TieBreakingHeuristic = new NodeByOther(true);
+                Comparator<Node> TieBreakingHeuristic = new NodeByBuild(true);
                 return TieBreakingHeuristic.compare(n1, n2);
             }
         }
