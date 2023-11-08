@@ -44,12 +44,13 @@ abstract public class GenericSearch implements SearchInterface {
 
                 return node.getPath();
             }
-            nodes = strategy.queueingFunction(nodes, expand(node));
+            Node[] expanded = !isBlocked(node) ? expand(node) : new Node[0];
+            nodes = strategy.queueingFunction(nodes, expanded);
             nodesExpanded++;
         }
     }
     
-    public String solveIterative(String initialState, SearchStrategy strategy, boolean vizualize, int maxDepth) {
+    public String solveIterative(String initialState, SearchStrategy strategy, boolean vizualize, int maxDepth) throws Exception {
         // Record before values
         long[] stats = getStats();
         int nodesExpanded = 0;
@@ -82,7 +83,7 @@ abstract public class GenericSearch implements SearchInterface {
 
                 return node.getPath();
             }
-            Node[] expanded = node.depth < depth ? expand(node) : new Node[0];
+            Node[] expanded = node.depth < depth && !isBlocked(node) ? expand(node) : new Node[0];
             nodes = strategy.queueingFunction(nodes, expanded);
             nodesExpanded++;
         }
@@ -107,7 +108,7 @@ abstract public class GenericSearch implements SearchInterface {
     }
 
     @Override
-    public Node makeNodeFromProblem(String problem) {
+    public Node makeNodeFromProblem(String problem) throws Exception {
         throw new UnsupportedOperationException();
     }
 
