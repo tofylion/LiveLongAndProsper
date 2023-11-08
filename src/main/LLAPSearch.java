@@ -1,5 +1,8 @@
 package main;
+import java.util.Set;
+
 import interfaces.SearchStrategy;
+import models.Node;
 import strategies.IterativeDeepeningSearch;
 
 public class LLAPSearch extends GenericSearch {
@@ -12,6 +15,7 @@ public class LLAPSearch extends GenericSearch {
     private int[] energyRequest;
     private int[] buildOneInfo;
     private int[] buildTwoInfo;
+    private Set<Node> visitedNodes;
 
     public String solve(String initialState, SearchStrategy strategy, boolean vizualize) throws Exception {
         ParseInitialState(initialState);
