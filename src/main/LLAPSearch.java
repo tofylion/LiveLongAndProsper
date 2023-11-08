@@ -20,7 +20,6 @@ public class LLAPSearch extends GenericSearch {
     private int[] energyRequest; // amount, delay
     private int[] buildOneInfo; // price, food, materials, energy, prosperity
     private int[] buildTwoInfo; // price, food, materials, energy, prosperity
-    private Set<Node> visitedNodes;
 
     public String solve(String initialState, SearchStrategy strategy, boolean vizualize) throws Exception {
         if (strategy instanceof IterativeDeepeningSearch) {
