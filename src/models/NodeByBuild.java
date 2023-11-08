@@ -43,14 +43,14 @@ public class NodeByBuild implements Comparator<Node> {
         int betterBuild = getBetterBuild();
         if(betterBuild == 1)
         {
-            costNodeOneToGoal = (constants.Constants.prosperityGoal - n1.state.getProsperityLevel()) * priceBuildOne ;
-            costNodeTwoToGoal = (constants.Constants.prosperityGoal - n2.state.getProsperityLevel()) * priceBuildOne ;
+            costNodeOneToGoal = ((constants.Constants.prosperityGoal - n1.state.getProsperityLevel()) / prosperityBuildOne ) * priceBuildOne ;
+            costNodeTwoToGoal = ((constants.Constants.prosperityGoal - n2.state.getProsperityLevel()) / prosperityBuildOne )* priceBuildOne ;
 
         }
         else 
         {
-            costNodeOneToGoal = (constants.Constants.prosperityGoal - n1.state.getProsperityLevel()) * priceBuildTwo  ;
-            costNodeTwoToGoal = (constants.Constants.prosperityGoal - n2.state.getProsperityLevel()) * priceBuildTwo ;
+            costNodeOneToGoal = ((constants.Constants.prosperityGoal - n1.state.getProsperityLevel()) / prosperityBuildTwo )* priceBuildTwo  ;
+            costNodeTwoToGoal = ((constants.Constants.prosperityGoal - n2.state.getProsperityLevel()) / prosperityBuildTwo )* priceBuildTwo ;
 
         }
         CostOneAndTwo[0] = costNodeOneToGoal;
