@@ -2,22 +2,23 @@ package models;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Spliterator;
 
 import enums.Actions;
-import models.State;
+import treeprinter.SimpleTreeNode;
 
 public class Node implements Comparable<Node> {
     private Node parent;
     public State state;
     public Actions previousAction;
     public int depth;
+    private SimpleTreeNode simpleTreeNode;
 
     public Node(Node parent, State state, Actions previousAction, int depth) {
         this.parent = parent;
         this.state = state;
         this.previousAction = previousAction;
         this.depth = depth;
+        simpleTreeNode = _toSimpleTreeNode();
     }
 
     public Node(State state) {
@@ -25,6 +26,7 @@ public class Node implements Comparable<Node> {
         this.state = state;
         previousAction = null;
         depth = 0;
+        simpleTreeNode = _toSimpleTreeNode();
     }
 
     public String getPath() {
@@ -74,4 +76,23 @@ public class Node implements Comparable<Node> {
         return new Node(this, nextState, action, depth + 1);
     }
 
+    private SimpleTreeNode _toSimpleTreeNode() {
+        if (parent == null) {
+            return new SimpleTreeNode(state.toString());
+        }
+        SimpleTreeNode actionNode = new SimpleTreeNode(previousAction.toString());
+        SimpleTreeNode stateNode = new SimpleTreeNode(state.toString());
+        actionNode.addChild(stateNode);
+        return actionNode;
+    }
+
+    public SimpleTreeNode toSimpleTreeNode() {
+        return simpleTreeNode;
+    }
+
+    public void addSimpleTreeChildren(SimpleTreeNode[] children) {
+        for (SimpleTreeNode child : children) {
+            simpleTreeNode.addChild(child);
+        }
+    }
 }

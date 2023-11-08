@@ -8,6 +8,7 @@ import interfaces.SearchStrategy;
 import models.Node;
 import models.State;
 import strategies.IterativeDeepeningSearch;
+import treeprinter.SimpleTreeNode;
 
 public class LLAPSearch extends GenericSearch {
 
@@ -90,8 +91,8 @@ public class LLAPSearch extends GenericSearch {
                         newState = newState.addResources(foodRequest[0], 0, 0);
                         break;
                     case RequestMaterials:
-                            newState = newState.addResources(0, materialRequest[0], 0);
-                            break;
+                        newState = newState.addResources(0, materialRequest[0], 0);
+                        break;
                     case RequestEnergy:
                         newState = newState.addResources(0, 0, energyRequest[0]);
                         break;
@@ -102,14 +103,17 @@ public class LLAPSearch extends GenericSearch {
 
             Node[] expandedNodes = new Node[5];
             Node requestFoodNode = node.nextNode(
-                newState.requestResource(foodRequest[1],
-                    Actions.RequestFood, unitPrices[0], unitPrices[1], unitPrices[2]), Actions.RequestFood);
+                    newState.requestResource(foodRequest[1],
+                            Actions.RequestFood, unitPrices[0], unitPrices[1], unitPrices[2]),
+                    Actions.RequestFood);
             Node requestEnergyNode = node.nextNode(
-                newState.requestResource(energyRequest[1],
-                    Actions.RequestEnergy, unitPrices[0], unitPrices[1], unitPrices[2]), Actions.RequestEnergy);
+                    newState.requestResource(energyRequest[1],
+                            Actions.RequestEnergy, unitPrices[0], unitPrices[1], unitPrices[2]),
+                    Actions.RequestEnergy);
             Node requestMaterialsNode = node.nextNode(
-                newState.requestResource(materialRequest[1],
-                    Actions.RequestMaterials, unitPrices[0], unitPrices[1], unitPrices[2]), Actions.RequestMaterials);
+                    newState.requestResource(materialRequest[1],
+                            Actions.RequestMaterials, unitPrices[0], unitPrices[1], unitPrices[2]),
+                    Actions.RequestMaterials);
             Node buildOneNode = node.nextNode(
                     newState.useResources(buildOneInfo[0], buildOneInfo[1], buildOneInfo[2], buildOneInfo[3],
                             unitPrices[0], unitPrices[1], unitPrices[2], buildOneInfo[4]),
@@ -146,11 +150,19 @@ public class LLAPSearch extends GenericSearch {
                 "500,8,6,3,40;"; // buildTwoInfo
 
         LLAPSearch demo = new LLAPSearch();
-        demo.makeNodeFromProblem(intialState);
+        Node node = demo.makeNodeFromProblem(intialState);
+        Node[] expanded = !demo.isBlocked(node) ? demo.expand(node) : new Node[0];
+        SimpleTreeNode[] childrenViz = new SimpleTreeNode[expanded.length];
+        for (int i = 0; i < childrenViz.length; i++) {
+            childrenViz[i] = expanded[i].toSimpleTreeNode();
+        }
+        node.addSimpleTreeChildren(childrenViz);
+        demo.vizualize(node.toSimpleTreeNode());
+
         // for(int i= 0; i< demo.initialResources.length; i++){
         // System.out.println(demo.buildTwoInfo[i]);
         // }
-        System.out.println(demo.initialProsperity);
+        // System.out.println(demo.initialProsperity);
 
     }
 }
