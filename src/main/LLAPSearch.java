@@ -1,7 +1,5 @@
 package main;
 
-import javax.swing.JLabel;
-
 import constants.Constants;
 import enums.Actions;
 import interfaces.SearchStrategy;
