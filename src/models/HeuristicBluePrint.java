@@ -2,7 +2,7 @@ package models;
 
 import java.util.Comparator;
 
-public class NodeByProsperity implements Comparator<Node>{
+public class HeuristicBluePrint implements Comparator<Node>{
 
     @Override
     public int compare(Node n1, Node n2) {

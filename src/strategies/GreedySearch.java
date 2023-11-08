@@ -5,13 +5,13 @@ import java.util.Queue;
 
 import interfaces.SearchStrategy;
 import models.Node;
-import models.NodeByProsperity;
+import models.HeuristicBluePrint;
 
 public class GreedySearch implements SearchStrategy{
 
     @Override
     public Queue<Node> queueingFunction(Queue<Node> nodes, Node[] newNodes) {
-        PriorityQueue<Node> queue = new PriorityQueue<Node>(nodes.size() + newNodes.length, new NodeByProsperity());
+        PriorityQueue<Node> queue = new PriorityQueue<Node>(nodes.size() + newNodes.length, new HeuristicBluePrint());
         //add the existing nodes to the PQ
         for (Node node: nodes){
             queue.add(node);
