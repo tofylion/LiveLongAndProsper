@@ -1,5 +1,7 @@
 package main;
 
+import javax.swing.JLabel;
+
 import constants.Constants;
 import enums.Actions;
 import interfaces.SearchStrategy;
@@ -150,4 +152,14 @@ public class LLAPSearch extends GenericSearch {
         System.out.println(demo.initialProsperity);
 
     }
+
+    public int[] getBuildOneInfo() { 
+    return buildOneInfo;
+    }
+
+    public int[] getBuildTwoInfo() { 
+    return buildOneInfo;
+    }
+ 
+
 }
