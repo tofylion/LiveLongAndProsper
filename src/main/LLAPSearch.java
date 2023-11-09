@@ -164,4 +164,18 @@ public class LLAPSearch extends GenericSearch {
         // System.out.println(demo.initialProsperity);
 
     }
+
+    public int[] getBuildOneInfo() { 
+    return buildOneInfo;
+    }
+
+    public int[] getBuildTwoInfo() { 
+    return buildOneInfo;
+    }
+
+    public int[] getUnitPrices() { 
+    return unitPrices;
+    }
+ 
+
 }

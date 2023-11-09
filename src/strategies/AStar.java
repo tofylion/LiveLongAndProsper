@@ -3,16 +3,16 @@ package strategies;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import models.Node;
-import models.NodeByBuild;
-import interfaces.SearchStrategy;
 
-public class GreedySearch implements SearchStrategy  {
+import interfaces.SearchStrategy;
+import models.Node;
+
+public class AStar implements SearchStrategy{
 
     public Comparator<Node> firstHeuristic;
     public Comparator<Node> secondHeuristic;
 
-    public GreedySearch(Comparator<Node> firstHeuristic, Comparator<Node> secondHeuristic){
+    public AStar(Comparator<Node> firstHeuristic, Comparator<Node> secondHeuristic){
         this.firstHeuristic = firstHeuristic;
         this.secondHeuristic = secondHeuristic;
     }
@@ -20,7 +20,6 @@ public class GreedySearch implements SearchStrategy  {
     @Override
     public Queue<Node> queueingFunction(Queue<Node> nodes, Node[] newNodes) {
         PriorityQueue<Node> queue = new PriorityQueue<Node>(nodes.size() + newNodes.length, firstHeuristic);
-
         //add the existing nodes to the PQ
         for (Node node: nodes){
             queue.add(node);
@@ -32,7 +31,6 @@ public class GreedySearch implements SearchStrategy  {
         //typecast the PQ to a normal queue
         Queue<Node> returnQueue = queue;
         return returnQueue;
-
     }
+    
 }
-

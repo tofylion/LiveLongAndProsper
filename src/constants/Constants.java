@@ -4,3 +4,5 @@ public class Constants {
     public static int resourceLimit = 50;
     public static int prosperityGoal = 100;
 }
+
+    
