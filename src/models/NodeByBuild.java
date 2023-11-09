@@ -7,21 +7,28 @@ import models.Node;
 
 public class NodeByBuild implements Comparator<Node> {
 
-    public LLAPSearch lap;
+    public LLAPSearch problem;
     public Constants Constants;
-    private int[] buildOneInfo = lap.getBuildOneInfo();
-    private int[] buildTwoInfo = lap.getBuildTwoInfo();
-    int priceBuildOne = buildOneInfo[0];
-    int priceBuildTwo = buildTwoInfo[0];
-    int prosperityBuildOne = buildOneInfo[4];
-    int prosperityBuildTwo = buildTwoInfo[4];
+    private int[] buildOneInfo;
+    private int[] buildTwoInfo;
+    int priceBuildOne;
+    int priceBuildTwo;
+    int prosperityBuildOne;
+    int prosperityBuildTwo;
     int costNodeOneToGoal;
     int costNodeTwoToGoal;
 
     //checks if this instance is being used as a tiebreaker
     boolean isTieBreaking;
 
-    public NodeByBuild(boolean isTieBreaking){
+    public NodeByBuild(boolean isTieBreaking, LLAPSearch problem){
+        this.problem = problem;
+        buildOneInfo = problem.getBuildOneInfo();
+        buildTwoInfo = problem.getBuildTwoInfo();
+        priceBuildOne = buildOneInfo[0];
+        priceBuildTwo = buildTwoInfo[0];
+        prosperityBuildOne = buildOneInfo[4];
+        prosperityBuildTwo = buildTwoInfo[4];
         this.isTieBreaking = isTieBreaking;
     }
 
@@ -69,7 +76,7 @@ public class NodeByBuild implements Comparator<Node> {
             if (isTieBreaking) {
                 return 0;
             } else {
-                Comparator<Node> TieBreakingHeuristic = new NodeByOther(true);
+                Comparator<Node> TieBreakingHeuristic = new NodeByResources(true, pro);
                 return TieBreakingHeuristic.compare(n1, n2);
             }
         }
