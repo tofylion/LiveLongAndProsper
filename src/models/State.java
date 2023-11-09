@@ -97,4 +97,9 @@ public class State {
         return new State(prosperityLevel, food, materials, energy, moneySpent, deliveryPending, deliveryType);
     }
 
+    public String toString() {
+        return String.format("State{\n  prosperity=%d,\n  food=%d,\n  materials=%d,\n  energy=%d,\n  money_spent=%.2f\n}", prosperityLevel,
+                food, materials, energy, moneySpent);
+    }
+
 }
