@@ -44,9 +44,9 @@ public class NodeByBuild implements Comparator<Node> {
        }
     }
 
-    public int[] getCost(Node n1, Node n2)
+    public double[] getCost(Node n1, Node n2)
     {
-        int[] CostOneAndTwo = {0,0};
+        double[] CostOneAndTwo = {0,0};
         int betterBuild = getBetterBuild();
         if(betterBuild == 1)
         {
@@ -67,16 +67,16 @@ public class NodeByBuild implements Comparator<Node> {
 
     @Override
     public int compare(Node n1, Node n2) {
-        int[] Cost = getCost(n1, n2);
-        if (Cost[1] < Cost[0]){
-            return -1;
-        } else if (Cost[0] > Cost[1]){
+        double[] Cost = getCost(n1, n2);
+        if (Cost[0] < Cost[1]){
             return 1;
+        } else if (Cost[0] > Cost[1]){
+            return -1;
         } else{
             if (isTieBreaking) {
                 return 0;
             } else {
-                Comparator<Node> TieBreakingHeuristic = new NodeByResources(true, pro);
+                Comparator<Node> TieBreakingHeuristic = new NodeByResources(true, problem);
                 return TieBreakingHeuristic.compare(n1, n2);
             }
         }
