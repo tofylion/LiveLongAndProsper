@@ -4,9 +4,9 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import models.Node;
 import models.NodeByBuild;
-import interfaces.BestFirstSearch;
+import interfaces.SearchStrategy;
 
-public class GreedySearch implements BestFirstSearch  {
+public class GreedySearch implements SearchStrategy  {
 
     public Comparator<Node> firstHeuristic;
     public Comparator<Node> secondHeuristic;
@@ -31,17 +31,5 @@ public class GreedySearch implements BestFirstSearch  {
         Queue<Node> returnQueue = queue;
         return returnQueue;
 
-    }
-
-    @Override
-    public Queue<Node> firstHeuristic(Queue<Node> nodes, Node[] newNodes) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'firstHeuristic'");
-    }
-
-    @Override
-    public Queue<Node> secondHeuristic(Queue<Node> nodes, Node[] newNodes) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'secondHeuristic'");
     }
 }
