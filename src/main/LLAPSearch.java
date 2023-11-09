@@ -158,6 +158,10 @@ public class LLAPSearch extends GenericSearch {
     public int[] getBuildTwoInfo() { 
     return buildOneInfo;
     }
+
+    public int[] getUnitPrices() { 
+    return unitPrices;
+    }
  
 
 }
