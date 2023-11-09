@@ -33,16 +33,16 @@ public class NodeByResources implements Comparator<Node> {
         return maxRatio == ProsperityPerFoodOne ? 1 : 2;
     }
 
-    public int getTotalFood(int build){
+    public double getTotalFood(int build){
         int numberOfBuilds = constants.Constants.prosperityGoal / build == 1 ? resourcesPerBuild1[0] : resourcesPerBuild2[0] ;
-        int totalFood = numberOfBuilds * build == 1 ? resourcesPerBuild1[1] : resourcesPerBuild2[2];
+        double totalFood = numberOfBuilds * build == 1 ? resourcesPerBuild1[1] : resourcesPerBuild2[2];
         return totalFood;
     }
 
-    public int getCost(Node n1){
+    public double getCost(Node n1){
         int optimalBuild = getOptimalBuild();
-        int totalFoodNeeded = getTotalFood(optimalBuild);
-        int totalCost = totalFoodNeeded * pricesPerBuild[0];
+        double totalFoodNeeded = getTotalFood(optimalBuild);
+        double totalCost = totalFoodNeeded * pricesPerBuild[0];
 
         return totalCost;
     }
