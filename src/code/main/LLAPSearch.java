@@ -5,6 +5,8 @@ import code.interfaces.SearchStrategy;
 import code.models.Node;
 import code.models.NodeByBuild;
 import code.models.NodeByResources;
+import code.models.NodeStarByBuild;
+import code.models.NodeStarByResources;
 import code.models.State;
 import code.strategies.AStar;
 import code.strategies.BFS;
@@ -159,13 +161,13 @@ public class LLAPSearch extends GenericSearch {
             case "ID":
                 return new IterativeDeepeningSearch(100000);
             case "GR1":
-                return new GreedySearch(new NodeByBuild(false), new NodeByResources(true));
+                return new GreedySearch(new NodeByBuild(new NodeByResources()));
             case "GR2":
-                return new GreedySearch(new NodeByResources(false), new NodeByBuild(true));
+                return new GreedySearch(new NodeByResources(new NodeByBuild()));
             case "AS1":
-                return new AStar(new NodeByBuild(false), new NodeByResources(true));
+                return new AStar(new NodeStarByBuild(new NodeStarByResources()));
             case "AS2":
-                return new AStar(new NodeByResources(false), new NodeByBuild(true));
+                return new AStar(new NodeStarByResources(new NodeStarByBuild()));
             default:
                 return new BFS();
         }
@@ -220,7 +222,7 @@ public class LLAPSearch extends GenericSearch {
                 "5024,20,17,17,38;";
 
         String initialState = initialState9;
-        LLAPSearch.solve(initialState, "BF", false);
+        LLAPSearch.solve(initialState, "GR1", false);
 
     }
 

@@ -69,7 +69,7 @@ public class State {
 
     public State useResources(int foodPrice, int materialsPrice, int energyPrice) {
         return new State(prosperityLevel, food - 1, materials - 1, energy - 1,
-                moneySpent + foodPrice + energyPrice + materialsPrice, deliveryPending - 1,
+                moneySpent + foodPrice + energyPrice + materialsPrice, Math.max(deliveryPending - 1, -1),
                 deliveryType);
     }
 
@@ -78,7 +78,7 @@ public class State {
         return new State(Math.min(prosperityLevel + prosperityIncrease, Constants.prosperityGoal), this.food - food,
                 this.materials - materials, this.energy - energy,
                 moneySpent + cost + (food * foodPrice) + (materials * materialsPrice) + (energy * energyPrice),
-                deliveryPending - 1, deliveryType);
+                Math.max(deliveryPending - 1, -1), deliveryType);
     }
 
     public State addResources(int food, int materials, int energy) {
