@@ -1,12 +1,5 @@
 package code.main;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-
-import code.treeprinter.SimpleTreeNode;
 import code.enums.Actions;
 import code.interfaces.SearchStrategy;
 import code.models.Node;
@@ -30,111 +23,20 @@ public class LLAPSearch extends GenericSearch {
     private static int[] energyRequest; // amount, delay
     private static int[] buildOneInfo; // price, food, materials, energy, prosperity
     private static int[] buildTwoInfo; // price, food, materials, energy, prosperity
-    private static Set<String> expandedStates;
+
+    public LLAPSearch() {
+    }
 
     public static String solve(String initialState, String strategyString, boolean vizualize) throws Exception {
-        expandedStates = new HashSet<String>();
         Node root = makeNodeFromProblem(initialState);
-        expandedStates.add(root.state.toString());
         SearchStrategy strategy = decodeStrategy(strategyString);
         if (strategy instanceof IterativeDeepeningSearch) {
             IterativeDeepeningSearch newStrategy = (IterativeDeepeningSearch) strategy;
-            return solveIterative(initialState, strategy, vizualize, newStrategy.getMaxDepth());
+            return GenericSearch.solveIterative(root, strategy, vizualize, newStrategy.getMaxDepth(),
+                    new LLAPSearch());
         }
-        // Record before values
-        long[] stats = getStats();
-        int nodesExpanded = 0;
-
-        Queue<Node> nodes = new LinkedList<Node>();
-        nodes.add(root);
-
-        while (true) {
-            if (nodes.isEmpty())
-                return "nosolution";
-            Node node = nodes.remove();
-            if (goalTest(node) && !isBlocked(node)) {
-                // Record after values
-                long[] newStats = getStats();
-
-                // Calculate differences
-                long runningTime = newStats[0] - stats[0];
-                long cpuUsage = newStats[1] - stats[1];
-                long ramUsage = newStats[2] - stats[2];
-
-                // Print results
-                System.out.println("Running time: " + runningTime + " ns");
-                System.out.println("CPU usage: " + cpuUsage + " ns");
-                System.out.println("RAM usage: " + ramUsage + " bytes");
-                System.out.println("Nodes expanded: " + nodesExpanded);
-
-                return node.getPath();
-            }
-            Node[] expanded = !isBlocked(node) ? expand(node) : new Node[0];
-            if (vizualize) {
-                SimpleTreeNode[] childrenViz = new SimpleTreeNode[expanded.length];
-                for (int i = 0; i < childrenViz.length; i++) {
-                    childrenViz[i] = expanded[i].toSimpleTreeNode();
-                }
-                node.addSimpleTreeChildren(childrenViz);
-                vizualize(root.toSimpleTreeNode());
-            }
-            nodes = strategy.queueingFunction(nodes, expanded);
-            nodesExpanded++;
-        }
+        return GenericSearch.solve(root, strategy, vizualize, new LLAPSearch());
     }
-
-    public static String solveIterative(String initialState, SearchStrategy strategy, boolean vizualize, int maxDepth)
-            throws Exception {
-        // Record before values
-        long[] stats = getStats();
-        int nodesExpanded = 0;
-        // Perform depth-limited search with increasing depth limits
-        for (int depth = 0; depth <= maxDepth; depth++) {
-
-            Queue<Node> nodes = new LinkedList<Node>();
-            Node root = makeNodeFromProblem(initialState);
-            nodes.add(root);
-            expandedStates.add(root.state.toString());
-
-            while (true) {
-                if (nodes.isEmpty())
-                    break;
-                Node node = nodes.remove();
-                if (goalTest(node) && !isBlocked(node)) {
-                    // Record after values
-                    long[] newStats = getStats();
-
-                    // Calculate differences
-                    long runningTime = newStats[0] - stats[0];
-                    long cpuUsage = newStats[1] - stats[1];
-                    long ramUsage = newStats[2] - stats[2];
-
-                    // Print results
-                    System.out.println("Running time: " + runningTime + " ns");
-                    System.out.println("CPU usage: " + cpuUsage + " ns");
-                    System.out.println("RAM usage: " + ramUsage + " bytes");
-                    System.out.println("Nodes expanded: " + nodesExpanded);
-
-                    return node.getPath();
-                }
-                Node[] expanded = node.depth < depth && !isBlocked(node) ? expand(node) : new Node[0];
-                if (vizualize) {
-                    SimpleTreeNode[] childrenViz = new SimpleTreeNode[expanded.length];
-                    for (int i = 0; i < childrenViz.length; i++) {
-                        childrenViz[i] = expanded[i].toSimpleTreeNode();
-                    }
-                    node.addSimpleTreeChildren(childrenViz);
-                    vizualize(root.toSimpleTreeNode());
-                }
-
-                nodes = strategy.queueingFunction(nodes, expanded);
-                nodesExpanded++;
-            }
-        }
-
-        return "nosolution";
-    }
-
 
     public static Node makeNodeFromProblem(String initialState) throws Exception {
         String[] arguments = initialState.split(";");
@@ -163,7 +65,8 @@ public class LLAPSearch extends GenericSearch {
         return returnArray;
     }
 
-    public static Node[] expand(Node node) {
+    @Override
+    public Node[] expand(Node node) {
         /// Rules:
         /// Cannot wait unless delivery is pending
         /// Cannot exceed more than 50 of each resource
@@ -172,7 +75,6 @@ public class LLAPSearch extends GenericSearch {
         State currentState = node.state;
         if (currentState.isDeliveryPending()) {
             Node[] expanded = new Node[3];
-            int indexReached = 0;
             Node waitNode = node.nextNode(
                     currentState.useResources(unitPrices[0], unitPrices[1], unitPrices[2]),
                     Actions.WAIT);
@@ -186,7 +88,7 @@ public class LLAPSearch extends GenericSearch {
                     Actions.BUILD2);
             expanded[0] = waitNode;
             expanded[1] = buildOneNode;
-            expanded[2] = buildTwoNode;            
+            expanded[2] = buildTwoNode;
             return expanded;
         } else {
             State newState = currentState.copy();
@@ -207,7 +109,6 @@ public class LLAPSearch extends GenericSearch {
             }
 
             Node[] expandedNodes = new Node[5];
-            int indexReached = 0;
             Node requestFoodNode = node.nextNode(
                     newState.requestResource(foodRequest[1],
                             Actions.requestfood, unitPrices[0], unitPrices[1], unitPrices[2]),
@@ -237,40 +138,90 @@ public class LLAPSearch extends GenericSearch {
         }
     }
 
-    public static boolean isBlocked(Node node) {
+    @Override
+    public boolean isBlocked(Node node) {
         return node.state.stateBlocked();
     }
 
-    public static boolean goalTest(Node node) {
+    @Override
+    public boolean goalTest(Node node) {
         return node.state.getProsperityLevel() >= code.constants.Constants.prosperityGoal;
     }
 
-    public static SearchStrategy decodeStrategy(String strategy){
-        switch(strategy){
-            case "BF": return new BFS();
-            case "DF": return new DepthFirstSearch();
-            case "UC": return new UniformCost();
-            case "ID": return new IterativeDeepeningSearch(100000);
-            case "GR1": return new GreedySearch(new NodeByBuild(false), new NodeByResources(true));
-            case "GR2": return new GreedySearch(new NodeByResources(false), new NodeByBuild(true));
-            case "AS1": return new AStar(new NodeByBuild(false), new NodeByResources(true));
-            case "AS2": return new GreedySearch(new NodeByResources(false), new NodeByBuild(true));
-            default: return new BFS(); 
+    public static SearchStrategy decodeStrategy(String strategy) {
+        switch (strategy) {
+            case "BF":
+                return new BFS();
+            case "DF":
+                return new DepthFirstSearch();
+            case "UC":
+                return new UniformCost();
+            case "ID":
+                return new IterativeDeepeningSearch(100000);
+            case "GR1":
+                return new GreedySearch(new NodeByBuild(false), new NodeByResources(true));
+            case "GR2":
+                return new GreedySearch(new NodeByResources(false), new NodeByBuild(true));
+            case "AS1":
+                return new AStar(new NodeByBuild(false), new NodeByResources(true));
+            case "AS2":
+                return new AStar(new NodeByResources(false), new NodeByBuild(true));
+            default:
+                return new BFS();
         }
-}
-    
+    }
 
-    public static int[] getBuildOneInfo() { 
+    public static int[] getBuildOneInfo() {
         return buildOneInfo;
     }
 
-    public static int[] getBuildTwoInfo() { 
+    public static int[] getBuildTwoInfo() {
         return buildTwoInfo;
     }
 
-    public static int[] getUnitPrices() { 
+    public static int[] getUnitPrices() {
         return unitPrices;
     }
- 
+
+    public static void main(String[] args) throws Exception {
+        String initialState0 = "17;" +
+                "49,30,46;" +
+                "7,57,6;" +
+                "7,1;20,2;29,2;" +
+                "350,10,9,8,28;" +
+                "408,8,12,13,34;";
+
+        String initialState3 = "0;" +
+                "19,35,40;" +
+                "27,84,200;" +
+                "15,2;37,1;19,2;" +
+                "569,11,20,3,50;" +
+                "115,5,8,21,38;";
+
+        String initialState4 = "21;" +
+                "15,19,13;" +
+                "50,50,50;" +
+                "12,2;16,2;9,2;" +
+                "3076,15,26,28,40;" +
+                "5015,25,15,15,38;";
+
+        String initialState9 = "50;" +
+                "20,16,11;" +
+                "76,14,14;" +
+                "7,1;7,1;7,1;" +
+                "359,14,25,23,39;" +
+                "524,18,17,17,38;";
+
+        String initialState10 = "32;" +
+                "20,16,11;" +
+                "76,14,14;" +
+                "9,1;9,2;9,1;" +
+                "358,14,25,23,39;" +
+                "5024,20,17,17,38;";
+
+        String initialState = initialState9;
+        LLAPSearch.solve(initialState, "BF", false);
+
+    }
 
 }

@@ -68,14 +68,17 @@ public class State {
     }
 
     public State useResources(int foodPrice, int materialsPrice, int energyPrice) {
-        return new State(prosperityLevel, food - 1, materials - 1, energy - 1, moneySpent + foodPrice + energyPrice + materialsPrice, deliveryPending - 1,
+        return new State(prosperityLevel, food - 1, materials - 1, energy - 1,
+                moneySpent + foodPrice + energyPrice + materialsPrice, deliveryPending - 1,
                 deliveryType);
     }
 
     public State useResources(int cost, int food, int materials, int energy, int foodPrice, int materialsPrice,
             int energyPrice, int prosperityIncrease) {
-        return new State(Math.min(prosperityLevel + prosperityIncrease, Constants.prosperityGoal), this.food - food, this.materials - materials, this.energy - energy,
-                moneySpent + cost + (food*foodPrice) + (materials*materialsPrice) + (energy*energyPrice), deliveryPending - 1, deliveryType);
+        return new State(Math.min(prosperityLevel + prosperityIncrease, Constants.prosperityGoal), this.food - food,
+                this.materials - materials, this.energy - energy,
+                moneySpent + cost + (food * foodPrice) + (materials * materialsPrice) + (energy * energyPrice),
+                deliveryPending - 1, deliveryType);
     }
 
     public State addResources(int food, int materials, int energy) {
@@ -88,7 +91,8 @@ public class State {
                 null);
     }
 
-    public State requestResource(int deliveryTime, Actions deliveryType, int foodPrice, int materialsPrice, int energyPrice) {
+    public State requestResource(int deliveryTime, Actions deliveryType, int foodPrice, int materialsPrice,
+            int energyPrice) {
         State newState = new State(prosperityLevel, food, materials, energy, moneySpent, deliveryTime, deliveryType);
         return newState.useResources(foodPrice, materialsPrice, energyPrice);
     }
@@ -98,8 +102,17 @@ public class State {
     }
 
     public String toString() {
-        return String.format("State{\n  prosperity=%d,\n  food=%d,\n  materials=%d,\n  energy=%d,\n  money_spent=%.2f\n}", prosperityLevel,
+        return String.format(
+                "State{\nprosperity=%d,food=%d,materials=%d,energy=%d,money_spent=%.2f\n}",
+                prosperityLevel,
                 food, materials, energy, moneySpent);
+    }
+
+    public String toFullString() {
+        return String.format(
+                "State{\nprosperity=%d,food=%d,materials=%d,energy=%d,money_spent=%.2f,deliveryType=%s,deliveryPending=%s\n}",
+                prosperityLevel,
+                food, materials, energy, moneySpent, deliveryType, deliveryPending);
     }
 
 }

@@ -2,32 +2,41 @@ package code.main;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
-
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import code.treeprinter.SimpleTreeNode;
-import code.treeprinter.printer.traditional.TraditionalTreePrinter;
+import code.treeprinter.printer.listing.ListingTreePrinter;
 import code.interfaces.SearchInterface;
 import code.interfaces.SearchStrategy;
 import code.models.Node;
 
 abstract public class GenericSearch implements SearchInterface {
+    public GenericSearch() {
 
-    public String solve(String initialState, SearchStrategy strategy, boolean vizualize) throws Exception {
+    }
+
+    public static String solve(Node root, SearchStrategy strategy, boolean vizualize, GenericSearch problem)
+            throws Exception {
+        HashSet<String> allExpandedStates = new HashSet<String>();
         // Record before values
         long[] stats = getStats();
         int nodesExpanded = 0;
 
         Queue<Node> nodes = new LinkedList<Node>();
-        Node root = makeNodeFromProblem(initialState);
         nodes.add(root);
+        allExpandedStates.add(root.state.toFullString());
 
         while (true) {
-            if (nodes.isEmpty())
+            if (nodes.isEmpty()) {
+                if (vizualize)
+                    vizualize(root.toSimpleTreeNode());
                 return "NOSOLUTION";
+            }
             Node node = nodes.remove();
-            if (goalTest(node)) {
+            if (problem.goalTest(node) && !problem.isBlocked(node)) {
+
                 // Record after values
                 long[] newStats = getStats();
 
@@ -42,39 +51,67 @@ abstract public class GenericSearch implements SearchInterface {
                 System.out.println("RAM usage: " + ramUsage + " bytes");
                 System.out.println("Nodes expanded: " + nodesExpanded);
 
-                return node.getPath();
+                if (vizualize) {
+                    vizualize(root.toSimpleTreeNode());
+                    vizualize(node.toSimpleTreeNode());
+                }
+
+                return node.getPath() + ";" + nodesExpanded;
             }
-            Node[] expanded = !isBlocked(node) ? expand(node) : new Node[0];
+
+            Node[] expanded = !(problem.isBlocked(node)) ? problem.expand(node) : new Node[0];
+
+            int nonRepeatedCount = 0;
+
+            for (int i = 0; i < expanded.length; i++) {
+                if (!allExpandedStates.contains(expanded[i].state.toFullString())) {
+                    nonRepeatedCount++;
+                }
+            }
+
+            Node[] nonRepeatedExpanded = new Node[nonRepeatedCount];
+
+            int j = 0;
+            for (int i = 0; i < expanded.length; i++) {
+                if (!allExpandedStates.contains(expanded[i].state.toFullString())) {
+                    nonRepeatedExpanded[j] = expanded[i];
+                    allExpandedStates.add(expanded[i].state.toFullString());
+                    j++;
+                }
+            }
+
             if (vizualize) {
-                SimpleTreeNode[] childrenViz = new SimpleTreeNode[expanded.length];
+                SimpleTreeNode[] childrenViz = new SimpleTreeNode[nonRepeatedExpanded.length];
                 for (int i = 0; i < childrenViz.length; i++) {
-                    childrenViz[i] = expanded[i].toSimpleTreeNode();
+                    childrenViz[i] = nonRepeatedExpanded[i].toSimpleTreeNode();
                 }
                 node.addSimpleTreeChildren(childrenViz);
-                vizualize(root.toSimpleTreeNode());
             }
-            nodes = strategy.queueingFunction(nodes, expanded);
+
+            nodes = strategy.queueingFunction(nodes, nonRepeatedExpanded);
             nodesExpanded++;
         }
     }
 
-    public static String solveIterative(String initialState, SearchStrategy strategy, boolean vizualize, int maxDepth)
+    public static String solveIterative(Node root, SearchStrategy strategy, boolean vizualize, int maxDepth,
+            GenericSearch problem)
             throws Exception {
         // Record before values
         long[] stats = getStats();
         int nodesExpanded = 0;
         // Perform depth-limited search with increasing depth limits
         for (int depth = 0; depth <= maxDepth; depth++) {
-
+            HashSet<String> allExpandedStates = new HashSet<String>();
             Queue<Node> nodes = new LinkedList<Node>();
-            Node root = makeNodeFromProblem(initialState);
             nodes.add(root);
+            allExpandedStates.add(root.state.toFullString());
 
             while (true) {
                 if (nodes.isEmpty())
                     break;
                 Node node = nodes.remove();
-                if (goalTest(node)) {
+                if (problem.goalTest(node) && !problem.isBlocked(node)) {
+
                     // Record after values
                     long[] newStats = getStats();
 
@@ -88,22 +125,45 @@ abstract public class GenericSearch implements SearchInterface {
                     System.out.println("CPU usage: " + cpuUsage + " ns");
                     System.out.println("RAM usage: " + ramUsage + " bytes");
                     System.out.println("Nodes expanded: " + nodesExpanded);
+                    if (vizualize) {
+                        vizualize(root.toSimpleTreeNode());
+                        vizualize(node.toSimpleTreeNode());
+                    }
 
-                    return node.getPath();
+                    return node.getPath() + ";" + nodesExpanded;
                 }
-                Node[] expanded = node.depth < depth && !isBlocked(node) ? expand(node) : new Node[0];
+                Node[] expanded = node.depth <= depth && !problem.isBlocked(node) ? problem.expand(node) : new Node[0];
+                int nonRepeatedCount = 0;
+
+                for (int i = 0; i < expanded.length; i++) {
+                    if (!allExpandedStates.contains(expanded[i].state.toFullString())) {
+                        nonRepeatedCount++;
+                    }
+                }
+
+                Node[] nonRepeatedExpanded = new Node[nonRepeatedCount];
+                int j = 0;
+                for (int i = 0; i < expanded.length; i++) {
+                    if (!allExpandedStates.contains(expanded[i].state.toFullString())) {
+                        nonRepeatedExpanded[j] = expanded[i];
+                        allExpandedStates.add(expanded[i].state.toFullString());
+                        j++;
+                    }
+                }
+
                 if (vizualize) {
-                    SimpleTreeNode[] childrenViz = new SimpleTreeNode[expanded.length];
+                    SimpleTreeNode[] childrenViz = new SimpleTreeNode[nonRepeatedExpanded.length];
                     for (int i = 0; i < childrenViz.length; i++) {
-                        childrenViz[i] = expanded[i].toSimpleTreeNode();
+                        childrenViz[i] = nonRepeatedExpanded[i].toSimpleTreeNode();
                     }
                     node.addSimpleTreeChildren(childrenViz);
-                    vizualize(root.toSimpleTreeNode());
                 }
 
-                nodes = strategy.queueingFunction(nodes, expanded);
+                nodes = strategy.queueingFunction(nodes, nonRepeatedExpanded);
                 nodesExpanded++;
             }
+            if (vizualize)
+                vizualize(root.toSimpleTreeNode());
         }
 
         return "NOSOLUTION";
@@ -116,32 +176,28 @@ abstract public class GenericSearch implements SearchInterface {
      * @return an array of long values representing the start time, CPU time, and
      *         memory usage of the current thread.
      */
-    public static long[] getStats() {
+    private static long[] getStats() {
         long startTime = System.nanoTime();
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
         long startCpu = bean.getCurrentThreadCpuTime();
         long startRam = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         return new long[] { startTime, startCpu, startRam };
     }
-    
-    public static boolean isBlocked(Node node) {
-        return node.state.stateBlocked();
-    }
 
-    public static Node makeNodeFromProblem(String problem) throws Exception {
+    public boolean isBlocked(Node node) {
         throw new UnsupportedOperationException();
     }
 
-    public static boolean goalTest(Node node) {
+    public boolean goalTest(Node node) {
         throw new UnsupportedOperationException();
     }
 
-    public static Node[] expand(Node node) {
+    public Node[] expand(Node node) {
         throw new UnsupportedOperationException();
     }
 
     public static void vizualize(SimpleTreeNode rootNode) {
-        new TraditionalTreePrinter().print(rootNode);
+        new ListingTreePrinter().print(rootNode);
     }
 
 }

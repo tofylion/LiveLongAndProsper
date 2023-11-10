@@ -11,14 +11,15 @@ public class Node implements Comparable<Node> {
     public State state;
     public Actions previousAction;
     public int depth;
-    private SimpleTreeNode simpleTreeNode;
+    private SimpleTreeNode actionNode;
+    private SimpleTreeNode simpleNode;
 
     public Node(Node parent, State state, Actions previousAction, int depth) {
         this.parent = parent;
         this.state = state;
         this.previousAction = previousAction;
         this.depth = depth;
-        simpleTreeNode = _toSimpleTreeNode();
+        simpleNode = _toSimpleTreeNode();
     }
 
     public Node(State state) {
@@ -26,7 +27,7 @@ public class Node implements Comparable<Node> {
         this.state = state;
         previousAction = null;
         depth = 0;
-        simpleTreeNode = _toSimpleTreeNode();
+        simpleNode = _toSimpleTreeNode();
     }
 
     public String getPath() {
@@ -37,7 +38,7 @@ public class Node implements Comparable<Node> {
         for (int i = 0; i < planList.size() - 1; i++) {
             plan += " " + planList.get(i) + ",";
         }
-        plan += " " + planList.get(planList.size()-1);
+        plan += " " + planList.get(planList.size() - 1);
         return plan + ";" + (int) monetaryCost;
 
     }
@@ -51,7 +52,7 @@ public class Node implements Comparable<Node> {
             Actions previousAction = currentNode.previousAction;
 
             if (previousAction != null) {
-                accumulatedPlan.add(0, previousAction.toString());
+                accumulatedPlan.add(0, previousAction.toString().toLowerCase());
             }
 
             currentNode = currentNode.parent;
@@ -73,27 +74,38 @@ public class Node implements Comparable<Node> {
         }
     }
 
+    @Override
+    public boolean equals(Object anotherNode) {
+        if (anotherNode instanceof Node) {
+            return (state.toString()).equals((((Node) anotherNode).state.toString()));
+        }
+        return false;
+    }
+
     public Node nextNode(State nextState, Actions action) {
         return new Node(this, nextState, action, depth + 1);
     }
 
     private SimpleTreeNode _toSimpleTreeNode() {
         if (parent == null) {
-            return new SimpleTreeNode(state.toString());
+            SimpleTreeNode simpleTreeNode = new SimpleTreeNode(state.toString());
+            actionNode = simpleTreeNode;
+            return simpleTreeNode;
         }
         SimpleTreeNode actionNode = new SimpleTreeNode(previousAction.toString());
         SimpleTreeNode stateNode = new SimpleTreeNode(state.toString());
         actionNode.addChild(stateNode);
-        return actionNode;
+        this.actionNode = actionNode;
+        return stateNode;
     }
 
     public SimpleTreeNode toSimpleTreeNode() {
-        return simpleTreeNode;
+        return actionNode;
     }
 
     public void addSimpleTreeChildren(SimpleTreeNode[] children) {
         for (SimpleTreeNode child : children) {
-            simpleTreeNode.addChild(child);
+            simpleNode.addChild(child);
         }
     }
 }

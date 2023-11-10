@@ -1,9 +1,8 @@
 package code.models;
+
 import code.main.LLAPSearch;
 import code.constants.Constants;
 import java.util.Comparator;
-import code.models.Node;
-
 
 public class NodeByBuild implements Comparator<Node> {
 
@@ -17,11 +16,11 @@ public class NodeByBuild implements Comparator<Node> {
     int costNodeOneToGoal;
     int costNodeTwoToGoal;
 
-    //checks if this instance is being used as a tiebreaker
+    // checks if this instance is being used as a tiebreaker
     boolean isTieBreaking;
 
-    public NodeByBuild(boolean isTieBreaking){
-        System.out.println(buildOneInfo.toString());
+    public NodeByBuild(boolean isTieBreaking) {
+        // System.out.println(buildOneInfo.toString());
         priceBuildOne = buildOneInfo[0];
         priceBuildTwo = buildTwoInfo[0];
         prosperityBuildOne = buildOneInfo[4];
@@ -29,32 +28,28 @@ public class NodeByBuild implements Comparator<Node> {
         this.isTieBreaking = isTieBreaking;
     }
 
-    public int getBetterBuild()
-    {
-       if((prosperityBuildOne / priceBuildOne) > (prosperityBuildTwo / priceBuildTwo)) 
-       {
-        return 1;
-       }
-       else
-       {
-        return 2;
-       }
+    public int getBetterBuild() {
+        if ((prosperityBuildOne / priceBuildOne) > (prosperityBuildTwo / priceBuildTwo)) {
+            return 1;
+        } else {
+            return 2;
+        }
     }
 
-    public double[] getCost(Node n1, Node n2)
-    {
-        double[] CostOneAndTwo = {0,0};
+    public double[] getCost(Node n1, Node n2) {
+        double[] CostOneAndTwo = { 0, 0 };
         int betterBuild = getBetterBuild();
-        if(betterBuild == 1)
-        {
-            costNodeOneToGoal = ((code.constants.Constants.prosperityGoal - n1.state.getProsperityLevel()) / prosperityBuildOne ) * priceBuildOne ;
-            costNodeTwoToGoal = ((code.constants.Constants.prosperityGoal - n2.state.getProsperityLevel()) / prosperityBuildOne )* priceBuildOne ;
+        if (betterBuild == 1) {
+            costNodeOneToGoal = ((code.constants.Constants.prosperityGoal - n1.state.getProsperityLevel())
+                    / prosperityBuildOne) * priceBuildOne;
+            costNodeTwoToGoal = ((code.constants.Constants.prosperityGoal - n2.state.getProsperityLevel())
+                    / prosperityBuildOne) * priceBuildOne;
 
-        }
-        else 
-        {
-            costNodeOneToGoal = ((code.constants.Constants.prosperityGoal - n1.state.getProsperityLevel()) / prosperityBuildTwo )* priceBuildTwo  ;
-            costNodeTwoToGoal = ((code.constants.Constants.prosperityGoal - n2.state.getProsperityLevel()) / prosperityBuildTwo )* priceBuildTwo ;
+        } else {
+            costNodeOneToGoal = ((code.constants.Constants.prosperityGoal - n1.state.getProsperityLevel())
+                    / prosperityBuildTwo) * priceBuildTwo;
+            costNodeTwoToGoal = ((code.constants.Constants.prosperityGoal - n2.state.getProsperityLevel())
+                    / prosperityBuildTwo) * priceBuildTwo;
 
         }
         CostOneAndTwo[0] = costNodeOneToGoal;
@@ -65,11 +60,11 @@ public class NodeByBuild implements Comparator<Node> {
     @Override
     public int compare(Node n1, Node n2) {
         double[] Cost = getCost(n1, n2);
-        if (Cost[0] < Cost[1]){
+        if (Cost[0] < Cost[1]) {
             return 1;
-        } else if (Cost[0] > Cost[1]){
+        } else if (Cost[0] > Cost[1]) {
             return -1;
-        } else{
+        } else {
             if (isTieBreaking) {
                 return 0;
             } else {
@@ -79,11 +74,4 @@ public class NodeByBuild implements Comparator<Node> {
         }
     }
 
-
-
-
-
-   
-
-    
 }

@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import code.models.Node;
-import code.models.NodeByBuild;
 import code.interfaces.SearchStrategy;
 
 public class GreedySearch implements SearchStrategy  {
