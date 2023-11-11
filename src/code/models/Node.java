@@ -34,12 +34,12 @@ public class Node implements Comparable<Node> {
 
         List<String> planList = getPlan();
         String plan = "";
-        double monetaryCost = state.getMoneySpent();
+        int monetaryCost = state.getMoneySpent();
         for (int i = 0; i < planList.size() - 1; i++) {
             plan += " " + planList.get(i) + ",";
         }
         plan += " " + planList.get(planList.size() - 1);
-        return plan + ";" + (int) monetaryCost;
+        return plan + ";" + monetaryCost;
 
     }
 

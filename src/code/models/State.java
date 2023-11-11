@@ -1,7 +1,5 @@
 package code.models;
 
-import java.util.ArrayList;
-
 import code.constants.Constants;
 import code.enums.Actions;
 
@@ -10,11 +8,11 @@ public class State {
     private int food;
     private int materials;
     private int energy;
-    private double moneySpent;
+    private int moneySpent;
     private int deliveryPending;
     private Actions deliveryType;
 
-    public State(int prosperityLevel, int food, int materials, int energy, double moneySpent, int deliveryPending,
+    public State(int prosperityLevel, int food, int materials, int energy, int moneySpent, int deliveryPending,
             Actions deliveryType) {
         this.prosperityLevel = prosperityLevel;
         this.food = food;
@@ -41,7 +39,7 @@ public class State {
         return energy;
     }
 
-    public double getMoneySpent() {
+    public int getMoneySpent() {
         return moneySpent;
     }
 
@@ -105,14 +103,14 @@ public class State {
 
     public String toString() {
         return String.format(
-                "State{\nprosperity=%d,food=%d,materials=%d,energy=%d,money_spent=%.2f\n}",
+                "State{\nprosperity=%d,food=%d,materials=%d,energy=%d,money_spent=%d\n}",
                 prosperityLevel,
                 food, materials, energy, moneySpent);
     }
 
     public String toFullString() {
         return String.format(
-                "p=%d,f=%d,m=%d,e=%d,ms=%.2f,dt=%s,dp=%d",
+                "%d,%d,%d,%d,%d,%s,%d",
                 prosperityLevel,
                 food, materials, energy, moneySpent, deliveryType, deliveryPending);
     }
@@ -126,6 +124,6 @@ public class State {
     public boolean hasFullEnergy() {
         return energy >= Constants.resourceLimit;
     }
-    
+
 
 }
