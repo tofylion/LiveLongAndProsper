@@ -88,9 +88,9 @@ public class LLAPSearch extends GenericSearch {
                     currentState.useResources(buildTwoInfo[0], buildTwoInfo[1], buildTwoInfo[2], buildTwoInfo[3],
                             unitPrices[0], unitPrices[1], unitPrices[2], buildTwoInfo[4]),
                     Actions.BUILD2);
-            expanded[0] = waitNode;
-            expanded[1] = buildOneNode;
-            expanded[2] = buildTwoNode;
+            expanded[0] = buildOneNode;
+            expanded[1] = buildTwoNode;
+            expanded[2] = waitNode;
             return expanded;
         } else {
             State newState = currentState.copy();
@@ -131,11 +131,11 @@ public class LLAPSearch extends GenericSearch {
                     newState.useResources(buildTwoInfo[0], buildTwoInfo[1], buildTwoInfo[2], buildTwoInfo[3],
                             unitPrices[0], unitPrices[1], unitPrices[2], buildTwoInfo[4]),
                     Actions.BUILD2);
-            expandedNodes[0] = requestFoodNode;
-            expandedNodes[1] = requestEnergyNode;
-            expandedNodes[2] = requestMaterialsNode;
-            expandedNodes[3] = buildOneNode;
-            expandedNodes[4] = buildTwoNode;
+            expandedNodes[0] = buildOneNode;
+            expandedNodes[1] = buildTwoNode;
+            expandedNodes[2] = requestFoodNode;
+            expandedNodes[3] = requestEnergyNode;
+            expandedNodes[4] = requestMaterialsNode;
             return expandedNodes;
         }
     }
@@ -221,7 +221,7 @@ public class LLAPSearch extends GenericSearch {
                 "358,14,25,23,39;" +
                 "5024,20,17,17,38;";
 
-        String initialState = initialState9;
+        String initialState = initialState4;
         LLAPSearch.solve(initialState, "GR1", false);
 
     }

@@ -11,6 +11,7 @@ public class NodeByResources implements Comparator<Node> {
     int[] resourcesPerBuild2;
     int[] pricesPerBuild;
     Comparator<Node> tieBreakingHeuristic;
+    int optimalBuild;
 
     // check if this instance is being used as a tiebreaker only
     boolean isTieBreaking;
@@ -23,6 +24,7 @@ public class NodeByResources implements Comparator<Node> {
         resourcesPerBuild1 = getSlice(LLAPSearch.getBuildOneInfo(), 1, 5);
         resourcesPerBuild2 = getSlice(LLAPSearch.getBuildTwoInfo(), 1, 5);
         pricesPerBuild = LLAPSearch.getUnitPrices();
+        optimalBuild = getOptimalBuild();
     }
 
     public NodeByResources(Comparator<Node> tieBreakingHeuristic) {
@@ -41,7 +43,7 @@ public class NodeByResources implements Comparator<Node> {
     }
 
     public double getTotalFood(int build) {
-        int numberOfBuilds = code.constants.Constants.prosperityGoal / build == 1 ? resourcesPerBuild1[0]
+        int numberOfBuilds = (code.constants.Constants.prosperityGoal ) / build == 1 ? resourcesPerBuild1[0]
                 : resourcesPerBuild2[0];
         double totalFood = numberOfBuilds * build == 1 ? resourcesPerBuild1[1] : resourcesPerBuild2[2];
         return totalFood;
@@ -52,7 +54,6 @@ public class NodeByResources implements Comparator<Node> {
         if (costMap.containsKey(stateString)) {
             return costMap.get(stateString);
         } else {
-            int optimalBuild = getOptimalBuild();
             double totalFoodNeeded = getTotalFood(optimalBuild);
             double totalCost = totalFoodNeeded * pricesPerBuild[0];
 
