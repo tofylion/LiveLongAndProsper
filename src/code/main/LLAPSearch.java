@@ -110,7 +110,18 @@ public class LLAPSearch extends GenericSearch {
                 }
             }
 
-            Node[] expandedNodes = new Node[5];
+            int listLength = 2;
+            if (!currentState.hasFullFood()) {
+                listLength++;
+            }
+            if (!currentState.hasFullMaterials()) {
+                listLength++;
+            }
+            if (!currentState.hasFullEnergy()) {
+                listLength++;
+            }
+            
+            Node[] expandedNodes = new Node[listLength];
             Node requestFoodNode = node.nextNode(
                     newState.requestResource(foodRequest[1],
                             Actions.requestfood, unitPrices[0], unitPrices[1], unitPrices[2]),
@@ -131,11 +142,15 @@ public class LLAPSearch extends GenericSearch {
                     newState.useResources(buildTwoInfo[0], buildTwoInfo[1], buildTwoInfo[2], buildTwoInfo[3],
                             unitPrices[0], unitPrices[1], unitPrices[2], buildTwoInfo[4]),
                     Actions.BUILD2);
-            expandedNodes[0] = buildOneNode;
-            expandedNodes[1] = buildTwoNode;
-            expandedNodes[2] = requestFoodNode;
-            expandedNodes[3] = requestEnergyNode;
-            expandedNodes[4] = requestMaterialsNode;
+            int i = 0;
+            expandedNodes[i++] = buildOneNode;
+            expandedNodes[i++] = buildTwoNode;
+            if (!currentState.hasFullFood())
+                expandedNodes[i++] = requestFoodNode;
+            if (!currentState.hasFullMaterials())
+                expandedNodes[i++] = requestMaterialsNode;
+            if (!currentState.hasFullEnergy())
+                expandedNodes[i++] = requestEnergyNode;
             return expandedNodes;
         }
     }

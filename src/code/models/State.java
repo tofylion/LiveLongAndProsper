@@ -1,5 +1,7 @@
 package code.models;
 
+import java.util.ArrayList;
+
 import code.constants.Constants;
 import code.enums.Actions;
 
@@ -114,5 +116,16 @@ public class State {
                 prosperityLevel,
                 food, materials, energy, moneySpent, deliveryType, deliveryPending);
     }
+
+    public boolean hasFullFood() {
+        return food >= Constants.resourceLimit;
+    }
+    public boolean hasFullMaterials() {
+        return materials >= Constants.resourceLimit;
+    }
+    public boolean hasFullEnergy() {
+        return energy >= Constants.resourceLimit;
+    }
+    
 
 }

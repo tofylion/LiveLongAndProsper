@@ -60,7 +60,8 @@ public class Node implements Comparable<Node> {
 
         return accumulatedPlan;
     }
-
+    
+    @Override
     public int compareTo(Node anotherNode) {
         // if this node's cost is less than the other one then return -1.
         // if it is more than the other one return 1.
