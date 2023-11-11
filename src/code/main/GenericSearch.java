@@ -2,6 +2,7 @@ package code.main;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -133,33 +134,25 @@ abstract public class GenericSearch implements SearchInterface {
                     return node.getPath() + ";" + nodesExpanded;
                 }
                 Node[] expanded = node.depth <= depth && !problem.isBlocked(node) ? problem.expand(node) : new Node[0];
-                int nonRepeatedCount = 0;
 
+
+                ArrayList<Node> nonRepeatedExpanded = new ArrayList<Node>();
                 for (int i = 0; i < expanded.length; i++) {
                     if (!allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
-                        nonRepeatedCount++;
-                    }
-                }
-
-                Node[] nonRepeatedExpanded = new Node[nonRepeatedCount];
-                int j = 0;
-                for (int i = 0; i < expanded.length; i++) {
-                    if (!allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
-                        nonRepeatedExpanded[j] = expanded[i];
+                        nonRepeatedExpanded.add(expanded[i]);
                         allExpandedStates.add(expanded[i].state.toFullString());
-                        j++;
                     }
                 }
 
                 if (vizualize) {
-                    SimpleTreeNode[] childrenViz = new SimpleTreeNode[nonRepeatedExpanded.length];
+                    SimpleTreeNode[] childrenViz = new SimpleTreeNode[nonRepeatedExpanded.size()];
                     for (int i = 0; i < childrenViz.length; i++) {
-                        childrenViz[i] = nonRepeatedExpanded[i].toSimpleTreeNode();
+                        childrenViz[i] = nonRepeatedExpanded.get(i).toSimpleTreeNode();
                     }
                     node.addSimpleTreeChildren(childrenViz);
                 }
 
-                nodes = strategy.queueingFunction(nodes, nonRepeatedExpanded);
+                nodes = strategy.queueingFunction(nodes, nonRepeatedExpanded.toArray(new Node[nonRepeatedExpanded.size()]));
                 nodesExpanded++;
             }
             if (vizualize)

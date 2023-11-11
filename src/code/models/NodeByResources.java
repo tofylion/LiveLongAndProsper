@@ -10,27 +10,16 @@ public class NodeByResources implements Comparator<Node> {
     int[] resourcesPerBuild1;
     int[] resourcesPerBuild2;
     int[] pricesPerBuild;
-    Comparator<Node> tieBreakingHeuristic;
     int optimalBuild;
-
-    // check if this instance is being used as a tiebreaker only
-    boolean isTieBreaking;
 
     // HashMap to store the cost of each node
     Map<String, Double> costMap = new HashMap<>();
 
     public NodeByResources() {
-        this.isTieBreaking = true;
         resourcesPerBuild1 = getSlice(LLAPSearch.getBuildOneInfo(), 1, 5);
         resourcesPerBuild2 = getSlice(LLAPSearch.getBuildTwoInfo(), 1, 5);
         pricesPerBuild = LLAPSearch.getUnitPrices();
         optimalBuild = getOptimalBuild();
-    }
-
-    public NodeByResources(Comparator<Node> tieBreakingHeuristic) {
-        this();
-        this.isTieBreaking = false;
-        this.tieBreakingHeuristic = tieBreakingHeuristic;
     }
 
     public int getOptimalBuild() {
@@ -72,11 +61,7 @@ public class NodeByResources implements Comparator<Node> {
         } else if (cost1 < cost2) {
             return 1;
         } else {
-            if (isTieBreaking || tieBreakingHeuristic == null) {
-                return 0;
-            } else {
-                return tieBreakingHeuristic.compare(n1, n2);
-            }
+            return 0;
         }
     }
 

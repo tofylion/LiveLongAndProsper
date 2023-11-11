@@ -8,12 +8,9 @@ import code.interfaces.SearchStrategy;
 public class DepthFirstSearch implements SearchStrategy {
     @Override
     public Queue<Node> queueingFunction(Queue<Node> nodes, Node[] newNodes) {
-        Queue<Node> newQueue = new LinkedList<Node>();
+        LinkedList<Node> newQueue = (LinkedList<Node>) nodes;
         for (Node node : newNodes) {
-            newQueue.add(node);
-        }
-        for (Node node : nodes) {
-            newQueue.add(node);
+            newQueue.addFirst(node);
         }
         return newQueue;
     }

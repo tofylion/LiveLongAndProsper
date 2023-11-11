@@ -11,9 +11,9 @@ public class UniformCost implements SearchStrategy {
         //create a priority queue of length that fits both entries
         PriorityQueue<Node> queue = new PriorityQueue<Node>(nodes.size() + newNodes.length);
         //add the existing nodes to the PQ
-        for (Node node: nodes){
-            queue.add(node);
-        }
+        
+        queue.addAll(nodes);
+        
         //add the new nodes to the PQ
         for (Node node: newNodes){
             queue.add(node);

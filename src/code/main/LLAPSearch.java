@@ -176,13 +176,13 @@ public class LLAPSearch extends GenericSearch {
             case "ID":
                 return new IterativeDeepeningSearch(100000);
             case "GR1":
-                return new GreedySearch(new NodeByBuild(new NodeByResources()));
+                return new GreedySearch(new NodeByBuild());
             case "GR2":
-                return new GreedySearch(new NodeByResources(new NodeByBuild()));
+                return new GreedySearch(new NodeByResources());
             case "AS1":
-                return new AStar(new NodeStarByBuild(new NodeStarByResources()));
+                return new AStar(new NodeStarByBuild());
             case "AS2":
-                return new AStar(new NodeStarByResources(new NodeStarByBuild()));
+                return new AStar(new NodeStarByResources());
             default:
                 return new BFS();
         }

@@ -14,8 +14,6 @@ public class NodeByBuild implements Comparator<Node> {
     int prosperityBuildTwo;
     int costNodeOneToGoal;
     int costNodeTwoToGoal;
-    Comparator<Node> tieBreakingHeuristic;
-    boolean isTieBreaking;
     HashMap<String, Double> costMap;
     private int optimalBuild;
 
@@ -24,16 +22,10 @@ public class NodeByBuild implements Comparator<Node> {
         priceBuildTwo = buildTwoInfo[0];
         prosperityBuildOne = buildOneInfo[4];
         prosperityBuildTwo = buildTwoInfo[4];
-        this.isTieBreaking = true;
         this.costMap = new HashMap<>();
         this.optimalBuild = getBetterBuild();
     }
 
-    public NodeByBuild(Comparator<Node> tieBreakingHeuristic) {
-        this();
-        this.isTieBreaking = false;
-        this.tieBreakingHeuristic = tieBreakingHeuristic;
-    }
 
     public int getBetterBuild() {
         if ((prosperityBuildOne / priceBuildOne) > (prosperityBuildTwo / priceBuildTwo)) {
@@ -72,11 +64,7 @@ public class NodeByBuild implements Comparator<Node> {
         } else if (cost1 > cost2) {
             return -1;
         } else {
-            if (isTieBreaking || tieBreakingHeuristic == null) {
-                return 0;
-            } else {
-                return tieBreakingHeuristic.compare(n1, n2);
-            }
+            return 0;
         }
     }
 

@@ -4,17 +4,7 @@ import java.util.Comparator;
 
 public class NodeStarByResources implements Comparator<Node> {
 
-    Comparator<Node> tieBreakingHeuristic;
-    boolean isTieBreaking;
-
     public NodeStarByResources() {
-        isTieBreaking = true;
-    }
-
-    public NodeStarByResources(Comparator<Node> tieBreakingHeuristic) {
-        this();
-        this.tieBreakingHeuristic = tieBreakingHeuristic;
-        this.isTieBreaking = false;
     }
 
     @Override
@@ -30,11 +20,7 @@ public class NodeStarByResources implements Comparator<Node> {
             } else if (costNode1 > costNode2) {
                 return -1;
             } else {
-                if (isTieBreaking || tieBreakingHeuristic == null) {
-                    return 0;
-                } else {
-                    return tieBreakingHeuristic.compare(o1, o2);
-                }
+                return 0;
             }
         }
     }
