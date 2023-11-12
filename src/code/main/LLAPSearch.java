@@ -1,5 +1,7 @@
 package code.main;
 
+import java.util.ArrayList;
+
 import code.enums.Actions;
 import code.interfaces.SearchStrategy;
 import code.models.Node;
@@ -88,9 +90,9 @@ public class LLAPSearch extends GenericSearch {
                     currentState.useResources(buildTwoInfo[0], buildTwoInfo[1], buildTwoInfo[2], buildTwoInfo[3],
                             unitPrices[0], unitPrices[1], unitPrices[2], buildTwoInfo[4]),
                     Actions.BUILD2);
-            expanded[0] = buildOneNode;
+            expanded[0] = waitNode;
             expanded[1] = buildTwoNode;
-            expanded[2] = waitNode;
+            expanded[2] = buildOneNode;
             return expanded;
         } else {
             State newState = currentState.copy();
@@ -110,30 +112,8 @@ public class LLAPSearch extends GenericSearch {
                 }
             }
 
-            int listLength = 2;
-            if (!currentState.hasFullFood()) {
-                listLength++;
-            }
-            if (!currentState.hasFullMaterials()) {
-                listLength++;
-            }
-            if (!currentState.hasFullEnergy()) {
-                listLength++;
-            }
+            ArrayList<Node> expandedNodes = new ArrayList<Node>();;
             
-            Node[] expandedNodes = new Node[listLength];
-            Node requestFoodNode = node.nextNode(
-                    newState.requestResource(foodRequest[1],
-                            Actions.requestfood, unitPrices[0], unitPrices[1], unitPrices[2]),
-                    Actions.requestfood);
-            Node requestEnergyNode = node.nextNode(
-                    newState.requestResource(energyRequest[1],
-                            Actions.requestenergy, unitPrices[0], unitPrices[1], unitPrices[2]),
-                    Actions.requestenergy);
-            Node requestMaterialsNode = node.nextNode(
-                    newState.requestResource(materialRequest[1],
-                            Actions.requestmaterials, unitPrices[0], unitPrices[1], unitPrices[2]),
-                    Actions.requestmaterials);
             Node buildOneNode = node.nextNode(
                     newState.useResources(buildOneInfo[0], buildOneInfo[1], buildOneInfo[2], buildOneInfo[3],
                             unitPrices[0], unitPrices[1], unitPrices[2], buildOneInfo[4]),
@@ -142,16 +122,31 @@ public class LLAPSearch extends GenericSearch {
                     newState.useResources(buildTwoInfo[0], buildTwoInfo[1], buildTwoInfo[2], buildTwoInfo[3],
                             unitPrices[0], unitPrices[1], unitPrices[2], buildTwoInfo[4]),
                     Actions.BUILD2);
-            int i = 0;
-            expandedNodes[i++] = buildOneNode;
-            expandedNodes[i++] = buildTwoNode;
-            if (!currentState.hasFullFood())
-                expandedNodes[i++] = requestFoodNode;
-            if (!currentState.hasFullMaterials())
-                expandedNodes[i++] = requestMaterialsNode;
-            if (!currentState.hasFullEnergy())
-                expandedNodes[i++] = requestEnergyNode;
-            return expandedNodes;
+            if (!currentState.hasFullFood()) {
+                Node requestFoodNode = node.nextNode(
+                    newState.requestResource(foodRequest[1],
+                            Actions.requestfood, unitPrices[0], unitPrices[1], unitPrices[2]),
+                    Actions.requestfood);
+                expandedNodes.add(requestFoodNode);
+            }
+            if (!currentState.hasFullMaterials()) {
+                Node requestMaterialsNode = node.nextNode(
+                    newState.requestResource(materialRequest[1],
+                            Actions.requestmaterials, unitPrices[0], unitPrices[1], unitPrices[2]),
+                    Actions.requestmaterials);
+                expandedNodes.add(requestMaterialsNode);
+            }
+            if (!currentState.hasFullEnergy()) {
+                Node requestEnergyNode = node.nextNode(
+                    newState.requestResource(energyRequest[1],
+                            Actions.requestenergy, unitPrices[0], unitPrices[1], unitPrices[2]),
+                    Actions.requestenergy);
+                expandedNodes.add(requestEnergyNode);
+
+            }
+            expandedNodes.add(buildTwoNode);
+            expandedNodes.add(buildOneNode);
+            return expandedNodes.toArray(new Node[0]);
         }
     }
 
@@ -235,9 +230,15 @@ public class LLAPSearch extends GenericSearch {
                 "9,1;9,2;9,1;" +
                 "358,14,25,23,39;" +
                 "5024,20,17,17,38;";
+        String initialState11 = "50;"+
+                "22,22,22;" +
+                "50,60,70;" +
+                "30,2;19,1;15,1;" +
+                "300,5,7,3,20;" +
+                "500,8,6,3,40;";
 
-        String initialState = initialState4;
-        LLAPSearch.solve(initialState, "GR1", false);
+        String initialState = initialState11;
+        LLAPSearch.solve(initialState, "BF", true);
 
     }
 

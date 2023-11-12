@@ -78,7 +78,7 @@ public class Node implements Comparable<Node> {
     @Override
     public boolean equals(Object anotherNode) {
         if (anotherNode instanceof Node) {
-            return (state.toString()).equals((((Node) anotherNode).state.toString()));
+            return (state.toFullString()).equals((((Node) anotherNode).state.toFullString()));
         }
         return false;
     }

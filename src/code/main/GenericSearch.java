@@ -8,6 +8,7 @@ import java.util.Queue;
 
 import code.treeprinter.SimpleTreeNode;
 import code.treeprinter.printer.listing.ListingTreePrinter;
+import code.enums.Actions;
 import code.interfaces.SearchInterface;
 import code.interfaces.SearchStrategy;
 import code.models.Node;
@@ -89,6 +90,7 @@ abstract public class GenericSearch implements SearchInterface {
             }
 
             nodes = strategy.queueingFunction(nodes, nonRepeatedExpanded);
+
             nodesExpanded++;
         }
     }
@@ -128,7 +130,7 @@ abstract public class GenericSearch implements SearchInterface {
                     if (vizualize) {
                         vizualize(root.toSimpleTreeNode());
                         vizualize(node.toSimpleTreeNode());
-                    }
+                }
 
                     return node.getPath() + ";" + nodesExpanded;
                 }
@@ -160,6 +162,7 @@ abstract public class GenericSearch implements SearchInterface {
                 }
 
                 nodes = strategy.queueingFunction(nodes, nonRepeatedExpanded);
+                System.out.println(nodesExpanded);
                 nodesExpanded++;
             }
             if (vizualize)

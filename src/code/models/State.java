@@ -75,7 +75,7 @@ public class State {
 
     public State useResources(int cost, int food, int materials, int energy, int foodPrice, int materialsPrice,
             int energyPrice, int prosperityIncrease) {
-        return new State(Math.min(prosperityLevel + prosperityIncrease, Constants.prosperityGoal), this.food - food,
+        return new State(prosperityLevel + prosperityIncrease, this.food - food,
                 this.materials - materials, this.energy - energy,
                 moneySpent + cost + (food * foodPrice) + (materials * materialsPrice) + (energy * energyPrice),
                 Math.max(deliveryPending - 1, 0), deliveryType);
@@ -102,17 +102,19 @@ public class State {
     }
 
     public String toString() {
-        return String.format(
-                "State{\nprosperity=%d,food=%d,materials=%d,energy=%d,money_spent=%d\n}",
-                prosperityLevel,
-                food, materials, energy, moneySpent);
+        return "State{\nprosperity=" + prosperityLevel + ",food=" + food + ",materials=" + materials + ",energy=" + energy + ",money_spent=" + moneySpent + "\n}";
     }
 
     public String toFullString() {
-        return String.format(
-                "%d,%d,%d,%d,%d,%s,%d",
-                prosperityLevel,
-                food, materials, energy, moneySpent, deliveryType, deliveryPending);
+        return new StringBuilder()
+        .append(prosperityLevel)
+        .append(food)
+        .append(materials)
+        .append(energy)
+        .append(moneySpent)
+        .append(deliveryType)
+        .append(deliveryPending)
+        .toString();
     }
 
     public boolean hasFullFood() {

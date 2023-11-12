@@ -1,0 +1,343 @@
+Running time: 50307675 ns
+CPU usage: 30454356 ns
+RAM usage: 1006792 bytes
+Nodes expanded: 22
+State{
+prosperity=50,food=22,materials=22,energy=22,money_spent=0
+}
+ ├─requestfood
+ │  └─State{
+ │    prosperity=50,food=21,materials=21,energy=21,money_spent=180
+ │    }
+ │     ├─WAIT
+ │     │  └─State{
+ │     │    prosperity=50,food=20,materials=20,energy=20,money_spent=360
+ │     │    }
+ │     │     ├─requestfood
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=49,materials=19,energy=19,money_spent=540
+ │     │     │    }
+ │     │     ├─requestmaterials
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=49,materials=19,energy=19,money_spent=540
+ │     │     │    }
+ │     │     ├─requestenergy
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=49,materials=19,energy=19,money_spent=540
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=42,materials=14,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=70,food=45,materials=13,energy=17,money_spent=1540
+ │     │          }
+ │     ├─BUILD2
+ │     │  └─State{
+ │     │    prosperity=90,food=13,materials=15,energy=18,money_spent=1650
+ │     │    }
+ │     │     ├─requestfood
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=42,materials=14,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     ├─requestmaterials
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=42,materials=14,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     ├─requestenergy
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=42,materials=14,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=130,food=35,materials=9,energy=15,money_spent=3120
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=110,food=38,materials=8,energy=15,money_spent=2830
+ │     │          }
+ │     └─BUILD1
+ │        └─State{
+ │          prosperity=70,food=16,materials=14,energy=18,money_spent=1360
+ │          }
+ │           ├─requestfood
+ │           │  └─State{
+ │           │    prosperity=70,food=45,materials=13,energy=17,money_spent=1540
+ │           │    }
+ │           ├─requestmaterials
+ │           │  └─State{
+ │           │    prosperity=70,food=45,materials=13,energy=17,money_spent=1540
+ │           │    }
+ │           ├─requestenergy
+ │           │  └─State{
+ │           │    prosperity=70,food=45,materials=13,energy=17,money_spent=1540
+ │           │    }
+ │           └─BUILD1
+ │              └─State{
+ │                prosperity=90,food=41,materials=7,energy=15,money_spent=2540
+ │                }
+ ├─requestmaterials
+ │  └─State{
+ │    prosperity=50,food=21,materials=21,energy=21,money_spent=180
+ │    }
+ │     ├─requestfood
+ │     │  └─State{
+ │     │    prosperity=50,food=20,materials=39,energy=20,money_spent=360
+ │     │    }
+ │     │     ├─WAIT
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=38,energy=19,money_spent=540
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=33,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=70,food=15,materials=32,energy=17,money_spent=1540
+ │     │          }
+ │     ├─requestmaterials
+ │     │  └─State{
+ │     │    prosperity=50,food=20,materials=39,energy=20,money_spent=360
+ │     │    }
+ │     │     ├─requestfood
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=49,energy=19,money_spent=540
+ │     │     │    }
+ │     │     ├─requestmaterials
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=49,energy=19,money_spent=540
+ │     │     │    }
+ │     │     ├─requestenergy
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=49,energy=19,money_spent=540
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=44,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=70,food=15,materials=43,energy=17,money_spent=1540
+ │     │          }
+ │     ├─requestenergy
+ │     │  └─State{
+ │     │    prosperity=50,food=20,materials=39,energy=20,money_spent=360
+ │     │    }
+ │     │     ├─requestfood
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=38,energy=34,money_spent=540
+ │     │     │    }
+ │     │     ├─requestmaterials
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=38,energy=34,money_spent=540
+ │     │     │    }
+ │     │     ├─requestenergy
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=38,energy=34,money_spent=540
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=33,energy=32,money_spent=1830
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=70,food=15,materials=32,energy=32,money_spent=1540
+ │     │          }
+ │     ├─BUILD2
+ │     │  └─State{
+ │     │    prosperity=90,food=13,materials=34,energy=18,money_spent=1650
+ │     │    }
+ │     │     ├─requestfood
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=33,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     ├─requestmaterials
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=33,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     ├─requestenergy
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=33,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=130,food=5,materials=28,energy=15,money_spent=3120
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=110,food=8,materials=27,energy=15,money_spent=2830
+ │     │          }
+ │     └─BUILD1
+ │        └─State{
+ │          prosperity=70,food=16,materials=33,energy=18,money_spent=1360
+ │          }
+ │           ├─requestfood
+ │           │  └─State{
+ │           │    prosperity=70,food=15,materials=32,energy=17,money_spent=1540
+ │           │    }
+ │           ├─requestmaterials
+ │           │  └─State{
+ │           │    prosperity=70,food=15,materials=32,energy=17,money_spent=1540
+ │           │    }
+ │           ├─requestenergy
+ │           │  └─State{
+ │           │    prosperity=70,food=15,materials=32,energy=17,money_spent=1540
+ │           │    }
+ │           └─BUILD1
+ │              └─State{
+ │                prosperity=90,food=11,materials=26,energy=15,money_spent=2540
+ │                }
+ ├─requestenergy
+ │  └─State{
+ │    prosperity=50,food=21,materials=21,energy=21,money_spent=180
+ │    }
+ │     ├─requestfood
+ │     │  └─State{
+ │     │    prosperity=50,food=20,materials=20,energy=35,money_spent=360
+ │     │    }
+ │     │     ├─WAIT
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=19,energy=34,money_spent=540
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=14,energy=32,money_spent=1830
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=70,food=15,materials=13,energy=32,money_spent=1540
+ │     │          }
+ │     ├─requestmaterials
+ │     │  └─State{
+ │     │    prosperity=50,food=20,materials=20,energy=35,money_spent=360
+ │     │    }
+ │     ├─requestenergy
+ │     │  └─State{
+ │     │    prosperity=50,food=20,materials=20,energy=35,money_spent=360
+ │     │    }
+ │     │     ├─requestfood
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=19,energy=49,money_spent=540
+ │     │     │    }
+ │     │     ├─requestmaterials
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=19,energy=49,money_spent=540
+ │     │     │    }
+ │     │     ├─requestenergy
+ │     │     │  └─State{
+ │     │     │    prosperity=50,food=19,materials=19,energy=49,money_spent=540
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=14,energy=47,money_spent=1830
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=70,food=15,materials=13,energy=47,money_spent=1540
+ │     │          }
+ │     ├─BUILD2
+ │     │  └─State{
+ │     │    prosperity=90,food=13,materials=15,energy=33,money_spent=1650
+ │     │    }
+ │     │     ├─requestfood
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=14,energy=32,money_spent=1830
+ │     │     │    }
+ │     │     ├─requestmaterials
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=14,energy=32,money_spent=1830
+ │     │     │    }
+ │     │     ├─requestenergy
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=14,energy=32,money_spent=1830
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=130,food=5,materials=9,energy=30,money_spent=3120
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=110,food=8,materials=8,energy=30,money_spent=2830
+ │     │          }
+ │     └─BUILD1
+ │        └─State{
+ │          prosperity=70,food=16,materials=14,energy=33,money_spent=1360
+ │          }
+ │           ├─requestfood
+ │           │  └─State{
+ │           │    prosperity=70,food=15,materials=13,energy=32,money_spent=1540
+ │           │    }
+ │           ├─requestmaterials
+ │           │  └─State{
+ │           │    prosperity=70,food=15,materials=13,energy=32,money_spent=1540
+ │           │    }
+ │           ├─requestenergy
+ │           │  └─State{
+ │           │    prosperity=70,food=15,materials=13,energy=32,money_spent=1540
+ │           │    }
+ │           └─BUILD1
+ │              └─State{
+ │                prosperity=90,food=11,materials=7,energy=30,money_spent=2540
+ │                }
+ ├─BUILD2
+ │  └─State{
+ │    prosperity=90,food=14,materials=16,energy=19,money_spent=1470
+ │    }
+ │     ├─requestfood
+ │     │  └─State{
+ │     │    prosperity=90,food=13,materials=15,energy=18,money_spent=1650
+ │     │    }
+ │     │     ├─WAIT
+ │     │     │  └─State{
+ │     │     │    prosperity=90,food=12,materials=14,energy=17,money_spent=1830
+ │     │     │    }
+ │     │     ├─BUILD2
+ │     │     │  └─State{
+ │     │     │    prosperity=130,food=5,materials=9,energy=15,money_spent=3120
+ │     │     │    }
+ │     │     └─BUILD1
+ │     │        └─State{
+ │     │          prosperity=110,food=8,materials=8,energy=15,money_spent=2830
+ │     │          }
+ │     ├─requestmaterials
+ │     │  └─State{
+ │     │    prosperity=90,food=13,materials=15,energy=18,money_spent=1650
+ │     │    }
+ │     ├─requestenergy
+ │     │  └─State{
+ │     │    prosperity=90,food=13,materials=15,energy=18,money_spent=1650
+ │     │    }
+ │     ├─BUILD2
+ │     │  └─State{
+ │     │    prosperity=130,food=6,materials=10,energy=16,money_spent=2940
+ │     │    }
+ │     └─BUILD1
+ │        └─State{
+ │          prosperity=110,food=9,materials=9,energy=16,money_spent=2650
+ │          }
+ └─BUILD1
+    └─State{
+      prosperity=70,food=17,materials=15,energy=19,money_spent=1180
+      }
+       ├─requestfood
+       │  └─State{
+       │    prosperity=70,food=16,materials=14,energy=18,money_spent=1360
+       │    }
+       ├─requestmaterials
+       │  └─State{
+       │    prosperity=70,food=16,materials=14,energy=18,money_spent=1360
+       │    }
+       ├─requestenergy
+       │  └─State{
+       │    prosperity=70,food=16,materials=14,energy=18,money_spent=1360
+       │    }
+       └─BUILD1
+          └─State{
+            prosperity=90,food=12,materials=8,energy=16,money_spent=2360
+            }
+BUILD2
+ └─State{
+   prosperity=130,food=6,materials=10,energy=16,money_spent=2940
+   }
