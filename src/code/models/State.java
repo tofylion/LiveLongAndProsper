@@ -70,9 +70,9 @@ public class State {
 
     public boolean stateOverflow(Actions nextAction){
         return 
-        (nextAction == Actions.requestenergy && energy + LLAPSearch.energyRequest[0] >= 50) || 
-        (nextAction == Actions.requestfood && food + LLAPSearch.foodRequest[0] >= 50) || 
-        (nextAction == Actions.requestmaterials && materials + LLAPSearch.materialRequest[0] >= 50);
+        (nextAction == Actions.requestenergy && energy + LLAPSearch.energyRequest[0] >= code.constants.Constants.resourceLimit) || 
+        (nextAction == Actions.requestfood && food + LLAPSearch.foodRequest[0] >= code.constants.Constants.resourceLimit) || 
+        (nextAction == Actions.requestmaterials && materials + LLAPSearch.materialRequest[0] >= code.constants.Constants.resourceLimit);
 
     }
     public State useResources(int foodPrice, int materialsPrice, int energyPrice) {
