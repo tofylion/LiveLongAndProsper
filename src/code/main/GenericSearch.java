@@ -64,7 +64,7 @@ abstract public class GenericSearch implements SearchInterface {
             int nonRepeatedCount = 0;
 
             for (int i = 0; i < expanded.length; i++) {
-                if (!allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
+                if (expanded[i] != null && !allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
                     nonRepeatedCount++;
                 }
             }
@@ -73,7 +73,7 @@ abstract public class GenericSearch implements SearchInterface {
 
             int j = 0;
             for (int i = 0; i < expanded.length; i++) {
-                if (!allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
+                if (expanded[i] != null && !allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
                     nonRepeatedExpanded[j] = expanded[i];
                     allExpandedStates.add(expanded[i].state.toFullString());
                     j++;
@@ -136,7 +136,7 @@ abstract public class GenericSearch implements SearchInterface {
                 int nonRepeatedCount = 0;
 
                 for (int i = 0; i < expanded.length; i++) {
-                    if (!allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
+                    if (expanded[i] != null && !allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
                         nonRepeatedCount++;
                     }
                 }
@@ -144,7 +144,7 @@ abstract public class GenericSearch implements SearchInterface {
                 Node[] nonRepeatedExpanded = new Node[nonRepeatedCount];
                 int j = 0;
                 for (int i = 0; i < expanded.length; i++) {
-                    if (!allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
+                    if (expanded[i] != null && !allExpandedStates.contains(expanded[i].state.toFullString()) && !problem.isBlocked(expanded[i])) {
                         nonRepeatedExpanded[j] = expanded[i];
                         allExpandedStates.add(expanded[i].state.toFullString());
                         j++;

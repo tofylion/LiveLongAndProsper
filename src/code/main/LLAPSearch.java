@@ -20,9 +20,9 @@ public class LLAPSearch extends GenericSearch {
     private static int initialProsperity;
     private static int[] initialResources; // food, materials, energy
     private static int[] unitPrices; // food, materials, energy
-    private static int[] foodRequest; // amount, delay
-    private static int[] materialRequest; // amount, delay
-    private static int[] energyRequest; // amount, delay
+    public static int[] foodRequest; // amount, delay
+    public static int[] materialRequest; // amount, delay
+    public static int[] energyRequest; // amount, delay
     private static int[] buildOneInfo; // price, food, materials, energy, prosperity
     private static int[] buildTwoInfo; // price, food, materials, energy, prosperity
 
@@ -111,15 +111,15 @@ public class LLAPSearch extends GenericSearch {
             }
 
             Node[] expandedNodes = new Node[5];
-            Node requestFoodNode = node.nextNode(
+            Node requestFoodNode = node.state.stateOverflow(Actions.requestfood) ? null : node.nextNode(
                     newState.requestResource(foodRequest[1],
                             Actions.requestfood, unitPrices[0], unitPrices[1], unitPrices[2]),
                     Actions.requestfood);
-            Node requestEnergyNode = node.nextNode(
+            Node requestEnergyNode = node.state.stateOverflow(Actions.requestenergy) ? null : node.nextNode(
                     newState.requestResource(energyRequest[1],
                             Actions.requestenergy, unitPrices[0], unitPrices[1], unitPrices[2]),
                     Actions.requestenergy);
-            Node requestMaterialsNode = node.nextNode(
+            Node requestMaterialsNode = node.state.stateOverflow(Actions.requestmaterials) ? null : node.nextNode(
                     newState.requestResource(materialRequest[1],
                             Actions.requestmaterials, unitPrices[0], unitPrices[1], unitPrices[2]),
                     Actions.requestmaterials);

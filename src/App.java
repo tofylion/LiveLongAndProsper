@@ -45,6 +45,6 @@ public class App {
                                 "9,1;9,2;9,1;" +
                                 "358,14,25,23,39;" +
                                 "5024,20,17,17,38;";
-                System.out.print(LLAPSearch.solve(initialState4, "GR1", false));
+                System.out.print(LLAPSearch.solve(initialState10, "BF", false));
         }
 }

@@ -2,6 +2,7 @@ package code.models;
 
 import code.constants.Constants;
 import code.enums.Actions;
+import code.main.LLAPSearch;
 
 public class State {
     private int prosperityLevel;
@@ -67,6 +68,13 @@ public class State {
         return food <= 0 || energy <= 0 || materials <= 0 || moneySpent >= Constants.budget;
     }
 
+    public boolean stateOverflow(Actions nextAction){
+        return 
+        (nextAction == Actions.requestenergy && energy + LLAPSearch.energyRequest[0] >= 50) || 
+        (nextAction == Actions.requestfood && food + LLAPSearch.foodRequest[0] >= 50) || 
+        (nextAction == Actions.requestmaterials && materials + LLAPSearch.materialRequest[0] >= 50);
+
+    }
     public State useResources(int foodPrice, int materialsPrice, int energyPrice) {
         return new State(prosperityLevel, food - 1, materials - 1, energy - 1,
                 moneySpent + foodPrice + energyPrice + materialsPrice, Math.max(deliveryPending - 1, 0),
