@@ -68,11 +68,11 @@ public class State {
         return food <= 0 || energy <= 0 || materials <= 0 || moneySpent >= Constants.budget;
     }
 
-    public boolean stateOverflow(Actions nextAction){
+    public boolean stateOverflow(){
         return 
-        (nextAction == Actions.requestenergy && energy + LLAPSearch.energyRequest[0] > code.constants.Constants.resourceLimit) || 
-        (nextAction == Actions.requestfood && food + LLAPSearch.foodRequest[0] > code.constants.Constants.resourceLimit) || 
-        (nextAction == Actions.requestmaterials && materials + LLAPSearch.materialRequest[0] > code.constants.Constants.resourceLimit);
+        (energy> code.constants.Constants.resourceLimit) || 
+        (food > code.constants.Constants.resourceLimit) || 
+        (materials > code.constants.Constants.resourceLimit);
 
     }
     public State useResources(int foodPrice, int materialsPrice, int energyPrice) {
@@ -91,9 +91,9 @@ public class State {
 
     public State addResources(int food, int materials, int energy) {
         return new State(prosperityLevel,
-                Math.min(this.food + food, Constants.resourceLimit),
-                Math.min(this.materials + materials, Constants.resourceLimit),
-                Math.min(this.energy + energy, Constants.resourceLimit),
+                this.food + food,
+                this.materials + materials,
+                this.energy + energy,
                 moneySpent,
                 deliveryPending,
                 null);

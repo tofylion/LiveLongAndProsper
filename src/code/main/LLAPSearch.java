@@ -111,15 +111,15 @@ public class LLAPSearch extends GenericSearch {
             }
 
             Node[] expandedNodes = new Node[5];
-            Node requestFoodNode = node.state.stateOverflow(Actions.requestfood) ? null : node.nextNode(
+            Node requestFoodNode = node.nextNode(
                     newState.requestResource(foodRequest[1],
                             Actions.requestfood, unitPrices[0], unitPrices[1], unitPrices[2]),
                     Actions.requestfood);
-            Node requestEnergyNode = node.state.stateOverflow(Actions.requestenergy) ? null : node.nextNode(
+            Node requestEnergyNode = node.nextNode(
                     newState.requestResource(energyRequest[1],
                             Actions.requestenergy, unitPrices[0], unitPrices[1], unitPrices[2]),
                     Actions.requestenergy);
-            Node requestMaterialsNode = node.state.stateOverflow(Actions.requestmaterials) ? null : node.nextNode(
+            Node requestMaterialsNode = node.nextNode(
                     newState.requestResource(materialRequest[1],
                             Actions.requestmaterials, unitPrices[0], unitPrices[1], unitPrices[2]),
                     Actions.requestmaterials);
@@ -131,11 +131,11 @@ public class LLAPSearch extends GenericSearch {
                     newState.useResources(buildTwoInfo[0], buildTwoInfo[1], buildTwoInfo[2], buildTwoInfo[3],
                             unitPrices[0], unitPrices[1], unitPrices[2], buildTwoInfo[4]),
                     Actions.BUILD2);
-            expandedNodes[0] = buildOneNode;
-            expandedNodes[1] = buildTwoNode;
-            expandedNodes[2] = requestFoodNode;
-            expandedNodes[3] = requestEnergyNode;
-            expandedNodes[4] = requestMaterialsNode;
+            expandedNodes[0] = buildOneNode.state.stateOverflow() ? null : buildOneNode;
+            expandedNodes[1] = buildTwoNode.state.stateOverflow() ? null : buildTwoNode;
+            expandedNodes[2] = requestFoodNode.state.stateOverflow() ? null : requestFoodNode;
+            expandedNodes[3] = requestEnergyNode.state.stateOverflow() ? null : requestEnergyNode;
+            expandedNodes[4] = requestMaterialsNode.state.stateOverflow() ? null : requestMaterialsNode;
             return expandedNodes;
         }
     }
