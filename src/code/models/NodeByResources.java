@@ -42,8 +42,8 @@ public class NodeByResources implements Comparator<Node> {
         return maxRatio == ProsperityPerFoodOne ? 1 : 2;
     }
 
-    public double getTotalFood(int build) {
-        int numberOfBuilds = (code.constants.Constants.prosperityGoal ) / build == 1 ? resourcesPerBuild1[0]
+    public double getTotalFood(int build, Node n1) {
+        int numberOfBuilds = (code.constants.Constants.prosperityGoal - n1.state.getProsperityLevel()) / build == 1 ? resourcesPerBuild1[0]
                 : resourcesPerBuild2[0];
         double totalFood = numberOfBuilds * build == 1 ? resourcesPerBuild1[1] : resourcesPerBuild2[2];
         return totalFood;
@@ -54,7 +54,7 @@ public class NodeByResources implements Comparator<Node> {
         if (costMap.containsKey(stateString)) {
             return costMap.get(stateString);
         } else {
-            double totalFoodNeeded = getTotalFood(optimalBuild);
+            double totalFoodNeeded = getTotalFood(optimalBuild, n1);
             double totalCost = totalFoodNeeded * pricesPerBuild[0];
 
             costMap.put(stateString, totalCost);
